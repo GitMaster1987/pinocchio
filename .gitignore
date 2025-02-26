@@ -18,3 +18,4 @@ env/
 db.sqlite3
 media/
 images/
+img/
