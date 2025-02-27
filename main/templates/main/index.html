@@ -3,3 +3,62 @@
 {# Title-Block #}
 {% block Title %}{{title}}{% endblock %}
 
+{# *** Banner - Block *** #}
+{% block Banners %}
+    <div id="carouselExample" class="carousel slide w-100" data-bs-ride="carousel"  data-bs-interval="4000">
+        
+        <div class="container pos_rel">
+
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                {% for banner in banners %}
+                    <li type="button" data-bs-target="#carouselExample" aria-label="Slide {{ forloop.counter0 }}" data-bs-slide-to="{{ forloop.counter0  }}" {% if forloop.first %} class="active"{% endif %}>
+                        <img src="{{ banner.image.url }}" alt="{{ banner.image | cut:"banner_img/" | cut:".png"  }}">
+                    </li>
+                {% endfor %}
+            </ol>
+            
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <!-- Carousel items   -->
+                {% for banner in banners %} 
+                <!-- ***** {{banner.title}}  ****** -->
+                <div class="carousel-item {% if forloop.first %}active {% endif %}">
+                    <div class="carousel-caption">
+                        <div class="carousel-caption__content">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="fadeUp item_img">
+                                            <img src="{{banner.image.url}}" alt="{{banner.title}}" width="{{banner.width}}" height="{{banner.height}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="fadeUp fade-slow item_details">
+                                            <div class="item_badge">
+                                                <span class="badge_btext"><sup>₽</sup> {{banner.price|floatformat:2}}</span>
+                                            </div>
+                                            <h4 class="item_name">{{banner.title}}</h4>
+                                            <div class="item_link_box">
+                                                <a href="#menus" class="item_link page-scroll">
+                                                    <i class="fa-solid fa-clipboard"></i>
+                                                    <span>Посмотреть меню</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}                
+            </div>
+        </div>    
+    </div>
+{% endblock Banners %}
+
+
+
+
+

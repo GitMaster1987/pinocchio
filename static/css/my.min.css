@@ -1,8 +1,9 @@
 .cart-number{
     margin-left: 5px;
-    background-color: bisque;
-    color:black;
+    background-color: rgba(238, 209, 173, 0.716);
+    color:rgba(13, 2, 110, 0.966);
     padding: 2px 2px;
-    border-radius: 75%;
+    border-radius: 85%;
     font-weight: 700;
+    font-size: 16px;
 }
