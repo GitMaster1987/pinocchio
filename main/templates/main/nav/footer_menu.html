@@ -1,0 +1,11 @@
+{% load menu_tags %}
+
+<div class="col-md-6 col-lg-4">
+    <h4 class="footer-ttl">Информация</h4>
+    <ul class="footer-nav">
+        {% get_Menu as menus %}
+        {% for menu in  menus %}
+            <li><a href="#{{menu.slug}}">{{menu.title}}</a></li>            
+        {% endfor %}
+    </ul>
+</div>

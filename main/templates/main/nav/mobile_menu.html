@@ -1,0 +1,8 @@
+{% load menu_tags %}
+
+<ul class="rmenu_list">
+    {% get_Menu as menus %}
+        {% for menu in  menus %}
+            <li><a class="page-scroll" href="#{{menu.slug}}">{{menu.title}}</a></li>
+        {% endfor %}    
+</ul>

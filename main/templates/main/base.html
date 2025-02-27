@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="{% static "css/plugins.min.css" %}">
 
     <!-- Custom main style -->
-    <link rel="stylesheet" type="text/css" href="{% static "" %} src/assets/css/main.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static "css/main.min.css" %}">
 
     <!-- Responsive -->
     <link rel="stylesheet" type="text/css" href="{% static "css/responsive.min.css" %}">
@@ -235,7 +235,7 @@
                                         <!-- Brand and toggle get grouped for better mobile display -->
                                         <div class="navbar-header">
                                             <a class="navbar-brand" href="#">
-                                                <img src="src/assets/img/logo3.png" alt="logo">
+                                                <img src="{% static "img/logo3.png" %}" alt="logo">
                                             </a>
                                         </div>
                                         <a href="#cd-nav" class="cd-nav-trigger right_menu_icon">
@@ -243,19 +243,7 @@
                                         </a>
 
                                         <!-- Collect the nav links, forms, and other content for toggling -->
-                                        <div class="collapse navbar-collapse d-none d-md-none d-lg-block" id="navbar">
-                                            <div class="navbar-right">
-                                                <ul class="nav navbar-nav">
-                                                    <li><a class="page-scroll hero active" href="#main">Главная</a></li>
-                                                    <li><a class="page-scroll special" href="#special">Предложения</a></li>
-                                                    <li><a class="page-scroll about" href="#about">О нас</a></li>
-                                                    <li><a class="page-scroll menus" href="#menus">Меню</a></li>
-                                                    <li><a class="page-scroll chef" href="#chef">Повора</a></li>
-                                                    <li><a class="page-scroll reservation" href="#reservation">Reservation</a></li>
-                                                    <li><a class="page-scroll footer" href="#contact">Контакты</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
+                                        {% include "main/nav/header_menu.html" %}
                                         <!-- /.navbar-collapse -->
                                     </div>
                                 </nav>
@@ -999,85 +987,6 @@
             </div>
         </section>
 
-        <!--    Reservation    -->
-        <section class="section" id="reservation">
-            <div class="container">
-                <div class="title-block">
-                    <span class="section-subtitle" data-aos="fade-up">Online Reservation</span>
-                    <h1 class="section-title" data-aos="fade-up">Book A Table Now!</h1>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6" data-aos="fade-up">
-                        <div class="whours">
-                            <h2 class="article-title">Working Hours</h2>
-                            <ul class="whours-list">
-                                <li><strong>Mon-Fri:</strong> 9.00 am - 10.00 pm</li>
-                                <li><strong>Launch:</strong> Everyday</li>
-                                <li><strong>Saturday:</strong> 10.00 am - 8.30 pm</li>
-                                <li><strong>Sunday:</strong> <span class="text-red">Closed</span></li>
-                            </ul>
-                        </div>
-                        <div class="coupon">
-                            <p class="coupon-note">Signup and get exclusive offers and <br> coupon codes</p>
-                            <button class="coupon-btn">
-                                <i class="icon-user-plus"></i>
-                                <span>Sign Up</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-lg-6" data-aos="fade-up">
-                        <div class="reserv_box">
-                            <form id="reserv_form" method="post">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="text" name="name" autocomplete="off" required=""
-                                                placeholder="Name*" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="email" name="email" autocomplete="off" required=""
-                                                placeholder="Email*" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="text" name="phone" autocomplete="off" required=""
-                                                placeholder="Phone*" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="text" name="date" autocomplete="off" required=""
-                                                placeholder="Date*" class="form-control" id="reserv_date">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="text" name="time" autocomplete="off" required=""
-                                                placeholder="Time*" class="form-control" id="reserv_time">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="text" name="guest" autocomplete="off" required=""
-                                                placeholder="Guest*" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="coupon-btn">
-                                    <i class="icon-shopping-bag"></i>
-                                    <span>Book Now</span>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
 
         <!-- Start .scroll-up -->
         <div class="scroll-up">
@@ -1093,25 +1002,16 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 col-lg-4">
-                            <img src="./src/assets/img/logo.png" alt="" class="footer-logo">
+                            <img src="{% static "img/logo3.png" %}" alt="" class="footer-logo">
                             <p class="footer-info">								
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua.
+                                Добро пожаловать в нашу пиццерию! 
+                                Мы гордимся тем, что предлагаем нашим гостям настоящую итальянскую пиццу, 
+                                приготовленную с любовью и по традиционным рецептам.
                             </p>                            
                         </div>
-                        <div class="col-md-6 col-lg-4">
-                            <h4 class="footer-ttl">Information</h4>
-                            <ul class="footer-nav">
-                                <li><a href="#hero">Home</a></li>
-                                <li><a href="#special">Special</a></li>
-                                <li><a href="#about">About</a></li>
-                                <li><a href="#menus">Menus</a></li>
-                                <li><a href="#chef">Chef</a></li>
-                                <li><a href="#reservation">Reservation</a></li>
-                                <li><a href="#gallery">Gallery</a></li>
-                                <li><a href="#contact">Contact</a></li>
-                            </ul>
-                        </div>
+                        {% comment %} ==== FOOTER MENU === {% endcomment %}
+                        {% include "main/nav/footer_menu.html" %}
+                        {% comment %} =============================== {% endcomment %}
                         <div class="col-md-6 col-lg-4">
                             <h4 class="footer-ttl">Contacts</h4>
                             <div class="footer-contact">
@@ -1139,15 +1039,8 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="copyr-txt">
-                                © 2024 Alissio. All Rights Reserved
+                                © 2025 Дипломный проект. ЦПОИС-23п
                             </div>
-                        </div>
-                        <div class="col-lg-8">
-                            <ul class="copyr-link">
-                                <li><a href="">Privacy Policy</a></li>
-                                <li><a href="">Cookie Policy</a></li>
-                                <li><a href="">Terms & Conditions</a></li>
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -1175,14 +1068,8 @@
                 </button>				
             </form>
         </div>
-        <ul class="rmenu_list">
-            <li><a class="page-scroll" href="#hero">Главная</a></li>
-            <li><a class="page-scroll" href="#special">Предложения</a></li>
-            <li><a class="page-scroll" href="#about">О нас</a></li>
-            <li><a class="page-scroll" href="#menus">Меню</a></li>
-            <li><a class="page-scroll" href="#chef">Повора</a></li>
-            <li><a class="page-scroll" href="#contact">Контакты</a></li>
-        </ul>
+        {% comment %} === Mobile MENU === {% endcomment %}
+        {% include "main/nav/mobile_menu.html" %}
         <div class="right_menu_addr top_addr">
             <span><i class="icon-map-pin"></i> Your country, your city, 12345</span>
             <span><i class="icon-phone-call"></i> 123 456 789</span>
@@ -1198,10 +1085,11 @@
     <!-- JavaScript -->
 
     <!-- All used plugins -->
-    <script src="src/assets/js/plugins.min.js"></script>
+    <script src="{% static "js/plugins.min.js" %}"></script>
 
     <!-- Custom main js -->
-    <script src="src/assets/js/main.min.js"></script>
+    <script src="{% static "js/main.min.js" %}"></script>
+
 
 </body>
 </html>

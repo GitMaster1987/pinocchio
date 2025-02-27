@@ -1,0 +1,11 @@
+{% load menu_tags %}
+<div class="collapse navbar-collapse d-none d-md-none d-lg-block" id="navbar">
+    <div class="navbar-right">
+        <ul class="nav navbar-nav">
+            {% get_Menu as menus %}
+            {% for menu in  menus %}
+                <li><a class="page-scroll {{menu.slug}}" href="#{{menu.slug}}">{{menu.title}}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
