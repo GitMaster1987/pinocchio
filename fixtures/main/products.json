@@ -214,5 +214,149 @@
             "discount": "0.00",
             "category": 2
         }
+    },
+    {
+        "model": "main.products",
+        "pk": 19,
+        "fields": {
+            "name": "Амброзия",
+            "description": "Классический салат с курицей, листьями салата, пармезаном и соусом Цезарь.",
+            "image": "product_img/ambrosia-salad-lg.jpg",
+            "price": "350.00",
+            "discount": "0.00",
+            "category": 3
+        }
+    },
+    {
+        "model": "main.products",
+        "pk": 20,
+        "fields": {
+            "name": "Греческий",
+            "description": "Салат с помидорами, огурцами, оливками, красным луком и фетой.",
+            "image": "product_img/bound-salad-xs.jpg",
+            "price": "235.00",
+            "discount": "0.00",
+            "category": 3
+        }
+    },
+    {
+        "model": "main.products",
+        "pk": 21,
+        "fields": {
+            "name": "Капрезе",
+            "description": "Салат с помидорами, моцареллой и свежим базиликом, заправленный оливковым маслом и бальзамическим уксусом.",
+            "image": "product_img/salad-lg.jpg",
+            "price": "295.00",
+            "discount": "7.00",
+            "category": 3
+        }
+    },
+    {
+        "model": "main.products",
+        "pk": 22,
+        "fields": {
+            "name": "Оливье",
+            "description": "Традиционный салат с вареной колбасой, картофелем, морковью, горошком и майонезом.",
+            "image": "product_img/salad-olivie.jpg",
+            "price": "175.00",
+            "discount": "0.00",
+            "category": 3
+        }
+    },
+    {
+        "model": "main.products",
+        "pk": 23,
+        "fields": {
+            "name": "Тунец и авокадо",
+            "description": "Салат с тунцом, авокадо, зелеными листьями и легкой лимонной заправкой.",
+            "image": "product_img/salad-iz-tunca-i-avokado.jpg",
+            "price": "375.00",
+            "discount": "3.00",
+            "category": 3
+        }
+    },
+    {
+        "model": "main.products",
+        "pk": 24,
+        "fields": {
+            "name": "Салат Нисуаз",
+            "description": "Салат с тунцом, анчоусами, оливками, картофелем и зеленой фасолью, заправленный винегретом.",
+            "image": "product_img/salad-nisuaz.jpeg",
+            "price": "250.00",
+            "discount": "0.00",
+            "category": 3
+        }
+    },
+    {
+        "model": "main.products",
+        "pk": 25,
+        "fields": {
+            "name": "Лимонад с мятой",
+            "description": "Освежающий лимонад с добавлением свежей мяты и лимонного сока.",
+            "image": "product_img/limonad-s-matoy.png",
+            "price": "150.00",
+            "discount": "0.00",
+            "category": 4
+        }
+    },
+    {
+        "model": "main.products",
+        "pk": 26,
+        "fields": {
+            "name": "Шоколадный молочный коктейль",
+            "description": "Сладкий и насыщенный молочный коктейль с шоколадным сиропом.",
+            "image": "product_img/shockolad-molocniy-koktel.png",
+            "price": "185.00",
+            "discount": "3.00",
+            "category": 4
+        }
+    },
+    {
+        "model": "main.products",
+        "pk": 27,
+        "fields": {
+            "name": "Мятный чай",
+            "description": "Охлажденный чай с листьями свежей мяты и кусочками лимона.",
+            "image": "product_img/green-tea-xs.jpg",
+            "price": "125.00",
+            "discount": "0.00",
+            "category": 4
+        }
+    },
+    {
+        "model": "main.products",
+        "pk": 28,
+        "fields": {
+            "name": "Ягодный морс",
+            "description": "Натуральный морс из лесных ягод, богатый витаминами и антиоксидантами.",
+            "image": "product_img/yagodniy-mors.png",
+            "price": "235.00",
+            "discount": "2.00",
+            "category": 4
+        }
+    },
+    {
+        "model": "main.products",
+        "pk": 29,
+        "fields": {
+            "name": "Кофе",
+            "description": "Ароматный горячий напиток из обжаренных и смолотых кофейных зерен, дарящий бодрость и энергию.",
+            "image": "product_img/napitok-coffe.jpg",
+            "price": "150.00",
+            "discount": "0.00",
+            "category": 4
+        }
+    },
+    {
+        "model": "main.products",
+        "pk": 30,
+        "fields": {
+            "name": "Клубничный смузи",
+            "description": "Густой и ароматный смузи из свежей клубники и йогурта.",
+            "image": "product_img/klubnichniy-smuzzy.jpg",
+            "price": "250.00",
+            "discount": "0.00",
+            "category": 4
+        }
     }
 ]
