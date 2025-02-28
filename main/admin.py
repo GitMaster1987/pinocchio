@@ -1,5 +1,5 @@
 from django.contrib import admin
-from main.models import Nav, Banner, Categories
+from main.models import Nav, Banner, Categories, Products
 
 # Register your models here.
 admin.site.register(Nav)
@@ -11,3 +11,4 @@ class BannerModelAdmin(admin.ModelAdmin):
 admin.site.register(Banner, BannerModelAdmin)
 
 admin.site.register(Categories)
+admin.site.register(Products)

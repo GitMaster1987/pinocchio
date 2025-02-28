@@ -3,7 +3,7 @@ from django.db import models
 from django.utils import timezone
 
 
-# Create your models here.
+# Модель навигации на сайте.
 class Nav(models.Model):
     title = models.CharField(
         max_length=20, blank=False, null=False, verbose_name="Название раздела"
@@ -87,6 +87,6 @@ class Products(models.Model):
         db_table = "products"
         verbose_name = "Блюдо"
         verbose_name_plural = "Блюда"
-    
+
     def __str__(self):
-        return str(self.pk) + " - " + self.name + " (" + self.price + ")"
+        return str(self.pk) + " - " + self.name + " (" + str(self.price) + ")" + " - Категория: " + self.category.title

@@ -1,0 +1,218 @@
+[
+    {
+        "model": "main.products",
+        "pk": 1,
+        "fields": {
+            "name": "Bacon Burger",
+            "description": "Бургер с котлетой из мраморной говядины, двойной порцией сыра чеддер, фирменным соусом",
+            "image": "product_img/bacon-burger_ZgL6ard.jpg",
+            "price": "300.00",
+            "discount": "10.00",
+            "category": 1
+        }
+    },
+    {
+        "model": "main.products",
+        "pk": 2,
+        "fields": {
+            "name": "Black Bean Burger",
+            "description": "100%-я говядина, ароматный бекон и много нежного сметанно-лукового соуса.",
+            "image": "product_img/black-bean-burger.jpg",
+            "price": "350.00",
+            "discount": "0.00",
+            "category": 1
+        }
+    },
+    {
+        "model": "main.products",
+        "pk": 3,
+        "fields": {
+            "name": "Класический Burger",
+            "description": "Сочный говяжья котлета, свежие овощи и нежный сыр на мягкой булочке.",
+            "image": "product_img/classic-burger.jpg",
+            "price": "350.00",
+            "discount": "2.00",
+            "category": 1
+        }
+    },
+    {
+        "model": "main.products",
+        "pk": 4,
+        "fields": {
+            "name": "Двойной Burger",
+            "description": "Два говяжьих котлеты, двойная порция сыра и свежие овощи.",
+            "image": "product_img/double-burger.jpg",
+            "price": "450.00",
+            "discount": "0.00",
+            "category": 1
+        }
+    },
+    {
+        "model": "main.products",
+        "pk": 5,
+        "fields": {
+            "name": "Smokey Burger",
+            "description": "Нежная куриная котлета с хрустящими листьями салата и томатами.",
+            "image": "product_img/smokey-burger.jpg",
+            "price": "335.00",
+            "discount": "0.00",
+            "category": 1
+        }
+    },
+    {
+        "model": "main.products",
+        "pk": 6,
+        "fields": {
+            "name": "Турецкий Burger",
+            "description": "Говяжья котлета с расплавленным чеддером и пикантными соусами",
+            "image": "product_img/turkey-burger.jpg",
+            "price": "375.00",
+            "discount": "5.00",
+            "category": 1
+        }
+    },
+    {
+        "model": "main.products",
+        "pk": 7,
+        "fields": {
+            "name": "Fixxx Burger",
+            "description": "Говяжья котлета, айсберг, лук, соленные огурцы, помидор.",
+            "image": "product_img/Fixxx_Burger.jpg",
+            "price": "325.00",
+            "discount": "0.00",
+            "category": 1
+        }
+    },
+    {
+        "model": "main.products",
+        "pk": 8,
+        "fields": {
+            "name": "Чизбургер",
+            "description": "Говяжья котлета, айсберг, лук, соленные огурцы, помидор, сыр.",
+            "image": "product_img/Chizberger.jpg",
+            "price": "350.00",
+            "discount": "5.00",
+            "category": 1
+        }
+    },
+    {
+        "model": "main.products",
+        "pk": 9,
+        "fields": {
+            "name": "БургерЧиз",
+            "description": "Говяжья котлета, томаты, маринованные огурцы, сыр, соус томатный.",
+            "image": "product_img/БургерЧиз.jpg",
+            "price": "350.00",
+            "discount": "0.00",
+            "category": 1
+        }
+    },
+    {
+        "model": "main.products",
+        "pk": 10,
+        "fields": {
+            "name": "Маргарита",
+            "description": "Классическая пицца с томатным соусом, свежими помидорами, моцареллой и базиликом.",
+            "image": "product_img/pizza-chicken-tikka-xs.jpg",
+            "price": "550.00",
+            "discount": "0.00",
+            "category": 2
+        }
+    },
+    {
+        "model": "main.products",
+        "pk": 11,
+        "fields": {
+            "name": "Пепперони",
+            "description": "Пицца с пикантной колбаской пепперони, томатным соусом и расплавленным сыром.",
+            "image": "product_img/pizza-hawaii-xs.jpg",
+            "price": "575.00",
+            "discount": "5.00",
+            "category": 2
+        }
+    },
+    {
+        "model": "main.products",
+        "pk": 12,
+        "fields": {
+            "name": "Гавайская",
+            "description": "Пицца с ананасами, ветчиной, моцареллой и сладким томатным соусом.",
+            "image": "product_img/pizza-kebab-xs.jpg",
+            "price": "600.00",
+            "discount": "0.00",
+            "category": 2
+        }
+    },
+    {
+        "model": "main.products",
+        "pk": 13,
+        "fields": {
+            "name": "Четыре сыра",
+            "description": "Пицца с миксом из четырех видов сыра: моцарелла, чеддер, пармезан и горгонзола.",
+            "image": "product_img/pizza-margherita-xs.jpg",
+            "price": "550.00",
+            "discount": "0.00",
+            "category": 2
+        }
+    },
+    {
+        "model": "main.products",
+        "pk": 14,
+        "fields": {
+            "name": "Капричоза",
+            "description": "Пицца с артишоками, ветчиной, шампиньонами, оливками и моцареллой.",
+            "image": "product_img/pizza-mushroom-xs.jpg",
+            "price": "565.00",
+            "discount": "0.00",
+            "category": 2
+        }
+    },
+    {
+        "model": "main.products",
+        "pk": 15,
+        "fields": {
+            "name": "Диабло",
+            "description": "Острая пицца с салями, острым перцем халапеньо, томатным соусом и сыром.",
+            "image": "product_img/diablo-pizza.png",
+            "price": "585.00",
+            "discount": "3.00",
+            "category": 2
+        }
+    },
+    {
+        "model": "main.products",
+        "pk": 16,
+        "fields": {
+            "name": "Вегетарианская",
+            "description": "Пицца с ассорти из свежих овощей, моцареллой и оливковым маслом.",
+            "image": "product_img/pizza-vegan.png",
+            "price": "450.00",
+            "discount": "0.00",
+            "category": 2
+        }
+    },
+    {
+        "model": "main.products",
+        "pk": 17,
+        "fields": {
+            "name": "Pepperoni",
+            "description": "Пицца с миксом мясных ингредиентов: говядина, курица, салями, бекон и сыр.",
+            "image": "product_img/pizza-pepperoni-xs.jpg",
+            "price": "750.00",
+            "discount": "5.00",
+            "category": 2
+        }
+    },
+    {
+        "model": "main.products",
+        "pk": 18,
+        "fields": {
+            "name": "Морская",
+            "description": "Пицца с морепродуктами: креветки, мидии, кальмары, томатный соус и моцарелла.",
+            "image": "product_img/pizza-more.png",
+            "price": "700.00",
+            "discount": "0.00",
+            "category": 2
+        }
+    }
+]
