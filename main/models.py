@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from PIL import Image
 
+
 def validate_image_dimensions(image):
     max_width = 354  # Максимальная ширина
     max_height = 484  # Максимальная высота
@@ -16,9 +17,13 @@ def validate_image_dimensions(image):
     width, height = img.size
 
     if width > max_width or height > max_height:
-        raise ValidationError(_('Ширина или высота изображения превышает допустимые размеры.'))
+        raise ValidationError(
+            _("Ширина или высота изображения превышает допустимые размеры.")
+        )
     if width < min_width or height < min_height:
-        raise ValidationError(_('Ширина или высота изображения меньше допустимых размеров.'))
+        raise ValidationError(
+            _("Ширина или высота изображения меньше допустимых размеров.")
+        )
 
 
 # Модель навигации на сайте.
@@ -107,25 +112,38 @@ class Products(models.Model):
         verbose_name_plural = "Блюда"
 
     def __str__(self):
-        return str(self.pk) + " - " + self.name + " (" + str(self.price) + ")" + " - Категория: " + self.category.title
-    
+        return (
+            str(self.pk)
+            + " - "
+            + self.name
+            + " ("
+            + str(self.price)
+            + ")"
+            + " - Категория: "
+            + self.category.title
+        )
+
     # Cчитаем цену со скидкой
     def sell_price(self):
         if self.discount:
             return math.ceil(round(self.price - (self.price * self.discount / 100), 2))
-        
+
         return self.price
+
 
 # ''' Шеф-повора '''
 class Chefs(models.Model):
-    name = models.CharField(
-        max_length=30, blank=False, null=False, verbose_name="Имя"
-    )
+    name = models.CharField(max_length=30, blank=False, null=False, verbose_name="Имя")
     lastName = models.CharField(
         max_length=30, blank=False, null=False, verbose_name="Фамилия"
     )
-    info = models.TextField(max_length=350, blank=False, null=False, verbose_name="Краткая информация")
-    image = models.ImageField(
-        upload_to="chefs_img", blank=False, null=False, verbose_name="Фотография", validators=[validate_image_dimensions]
+    info = models.TextField(
+        max_length=350, blank=False, null=False, verbose_name="Краткая информация"
     )
-    
+    image = models.ImageField(
+        upload_to="chefs_img",
+        blank=False,
+        null=False,
+        verbose_name="Фотография",
+        validators=[validate_image_dimensions],
+    )
