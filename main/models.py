@@ -2,6 +2,23 @@ from unicodedata import category
 from django.db import models
 from django.utils import timezone
 import math
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
+from PIL import Image
+
+def validate_image_dimensions(image):
+    max_width = 354  # Максимальная ширина
+    max_height = 484  # Максимальная высота
+    min_width = 354  # Минимальная ширина
+    min_height = 484  # Минимальная высота
+
+    img = Image.open(image)
+    width, height = img.size
+
+    if width > max_width or height > max_height:
+        raise ValidationError(_('Ширина или высота изображения превышает допустимые размеры.'))
+    if width < min_width or height < min_height:
+        raise ValidationError(_('Ширина или высота изображения меньше допустимых размеров.'))
 
 
 # Модель навигации на сайте.
@@ -98,3 +115,17 @@ class Products(models.Model):
             return math.ceil(round(self.price - (self.price * self.discount / 100), 2))
         
         return self.price
+
+# ''' Шеф-повора '''
+class Chefs(models.Model):
+    name = models.CharField(
+        max_length=30, blank=False, null=False, verbose_name="Имя"
+    )
+    lastName = models.CharField(
+        max_length=30, blank=False, null=False, verbose_name="Фамилия"
+    )
+    info = models.TextField(max_length=350, blank=False, null=False, verbose_name="Краткая информация")
+    image = models.ImageField(
+        upload_to="chefs_img", blank=False, null=False, verbose_name="Фотография", validators=[validate_image_dimensions]
+    )
+    
