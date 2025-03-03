@@ -56,7 +56,7 @@
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
 
     <!-- BEGIN  Loading -->
-    <div class="loading-overlay">
+    {% comment %} <div class="loading-overlay">
         <div class="spinner">
             <span></span>
             <span></span>
@@ -64,7 +64,7 @@
             <span></span>
             <span></span>
         </div>
-    </div>
+    </div> {% endcomment %}
     <!-- END Loading -->
 
     <!-- BEGIN body wrapper -->
@@ -356,7 +356,7 @@
     <nav class="cd-nav-container right_menu" id="cd-nav">
         <div class="header__open_menu">
             <a href="index.html" class="rmenu_logo" title="logo">
-                <img src="src/assets/img/logo.png" alt="logo">
+                <img src="{% static "img/logo3.png" %}" alt="logo">
             </a>
         </div>
         <div class="right_menu_search">

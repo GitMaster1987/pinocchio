@@ -1,6 +1,7 @@
 from unicodedata import category
 from django.db import models
 from django.utils import timezone
+import math
 
 
 # Модель навигации на сайте.
@@ -90,3 +91,10 @@ class Products(models.Model):
 
     def __str__(self):
         return str(self.pk) + " - " + self.name + " (" + str(self.price) + ")" + " - Категория: " + self.category.title
+    
+    # Cчитаем цену со скидкой
+    def sell_price(self):
+        if self.discount:
+            return math.ceil(round(self.price - (self.price * self.discount / 100), 2))
+        
+        return self.price
