@@ -86,10 +86,10 @@
                                 <nav class="navbar">
                                     <div id="navbar_content">
                                         <!-- Brand and toggle get grouped for better mobile display -->
-                                        <div class="navbar-header">
+                                        <div class="navbar-header">                                            
                                             <a class="navbar-brand" href="#">
                                                 <img src="{% static "img/logo3.png" %}" alt="logo">
-                                            </a>
+                                            </a>                                            
                                         </div>
                                         <a href="#cd-nav" class="cd-nav-trigger right_menu_icon">
                                             <span><i class="icon-menu"></i></span>
@@ -116,9 +116,9 @@
                                     </button>
                                 </form>
                             </div>
+                            {% comment %} <span class="login-out">Вы вошли как: <b>TestOUT</b></span> {% endcomment %}
                         </div>
                         <!-- /.navbar_top -->
-
                     </div>
                 </div>
                 <!-- /.navbar-container -->
@@ -128,164 +128,17 @@
         <!-- End hero -->
 
         <!-- Special Menu Slider Start -->
-        <section class="section" id="special">
-            <div class="container">
-                <div class="title-block">
-                    <!-- <span class="section-subtitle" data-aos="fade-up">Fresh from Pizza Mizza</span> -->
-                    <h1 class="section-title" data-aos="fade-up">Популярное блюдо</h1>
-                </div>
-
-                <!--    Special Menu items     -->
-                <div id="special-menu" class="menu-slider">
-                    <div class="menu-slider-item" data-aos="fade-up">
-                        <a href="#" class="menu-slider-item-link"></a>
-                        <div class="menu-slider-item-image">
-                            <img src="src/assets/img/pizza/barbeque-chicken.png" alt="">
-                        </div>
-                        <div class="menu-slider-item-desc">
-                            <h4 class="menu-slider-item-title">Barbeque Chicken</h4>
-                            <p class="menu-slider-item-subtitle">Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit, sed do</p>
-                            <div class="menu-slider-item-actions">
-                                <span class="menu-slider-item-price">$12.95</span>
-                                <a href="#" class="menu-slider-item-btn">Add to Cart</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="menu-slider-item" data-aos="fade-up">
-                        <div class="menu-slider-item-image">
-                            <img src="src/assets/img/pizza/pepperoni.png" alt="">
-                        </div>
-                        <div class="menu-slider-item-desc">
-                            <h4 class="menu-slider-item-title">Pepperoni</h4>
-                            <p class="menu-slider-item-subtitle">Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit, sed do</p>
-                            <div class="menu-slider-item-actions">
-                                <span class="menu-slider-item-price">$12.95</span>
-                                <a href="#" class="menu-slider-item-btn">Add to Cart</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="menu-slider-item" data-aos="fade-up">
-                        <div class="menu-slider-item-image">
-                            <img src="src/assets/img/pizza/shirmp-pizza.png" alt="">
-                        </div>
-                        <div class="menu-slider-item-desc">
-                            <h4 class="menu-slider-item-title">Cheese pizza</h4>
-                            <p class="menu-slider-item-subtitle">Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit, sed do</p>
-                            <div class="menu-slider-item-actions">
-                                <span class="menu-slider-item-price">$12.95</span>
-                                <a href="#" class="menu-slider-item-btn">Add to Cart</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="menu-slider-item" data-aos="fade-up">
-                        <div class="menu-slider-item-image">
-                            <img src="src/assets/img/pizza/vegetarian.png" alt="">
-                        </div>
-                        <div class="menu-slider-item-desc">
-                            <h4 class="menu-slider-item-title">Vegetarian</h4>
-                            <p class="menu-slider-item-subtitle">Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit, sed do</p>
-                            <div class="menu-slider-item-actions">
-                                <span class="menu-slider-item-price">$12.95</span>
-                                <a href="#" class="menu-slider-item-btn">Add to Cart</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        {% block  Special %} {% endblock %}
         <!-- Special Menu Slider End -->
 
         <!--    About    -->
-        <section class="section" id="about">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6" data-aos="fade-down">
-                        <div class="border_on">
-                            <img src="src/assets/img/photos/about-us.png" alt="pizza-restaurant" class="about-img">
-                        </div>
-                    </div>
-                    <div class="col-lg-6" data-aos="fade-up">
-                        <div class="content">
-                            <span class="section-subtitle">О нашем заведении</span>
-                            <h1 class="section-title title_sty2">Пиццерия "Пиноккио"</h1>
-                            <p class="desc">Добро пожаловать в аутентичный крафтовый гастропаб.
-                                Наслаждайтесь общением с друзьями, вкусными напитками и закусками из нашего меню.
-                                Бар "Пиноккио" – новое атмосферное место в Ленинском районе Донецка.
-                                Отлично подойдет для обедов и деловых встреч, а также просмотров прямых трансляций футбольных матчей. <br>
-                                Мы любим наше дело и относимся к нему очень серьезно и при этом со 
-                                всей душой. Наша цель – не просто готовить пиццу. 
-                                Мы хотим познакомить наших гостей и клиентов с настоящей итальянской пиццей.
-                                Наша цель – готовить действительно вкусную еду из качественных продуктов и 
-                                показать людям, что качество не обязано быть дорогим и находится далеко от дома. 
-                                Мы хотим донести до вас, что в пиццерии по соседству за доступную цену можно поесть 
-                                ничуть не хуже, чем в самом дорогом ресторане города.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        {% include "main/about.html" %}
 
         <!--    Menus   -->
         {% block Menus %}{% endblock %}
 
         <!--    Chef    -->
-        <section class="section chef" id="chef">
-            <div class="container">
-                <div class="title-block">
-                    <span class="section-subtitle" data-aos="fade-up">Meet Pizza Mizza Experts</span>
-                    <h1 class="section-title" data-aos="fade-up">Our Chef</h1>
-                </div>
-                <div id="chef-slider">
-
-
-                    <div class="chef-item" data-aos="zoom-in">
-                        <div class="chef-image">
-                            <img src="src/assets/img/photos/chef_2.jpg" alt="">
-                        </div>
-                        <div class="chef-info">
-                            <h3 class="chef-name">John Doe</h3>
-                        </div>
-                    </div>
-                    <div class="chef-item" data-aos="zoom-in">
-                        <div class="chef-image">
-                            <img src="src/assets/img/photos/chef_3.jpg" alt="">
-                        </div>
-                        <div class="chef-info">
-                            <h3 class="chef-name">John Doe</h3>
-                        </div>
-                    </div>
-                    <div class="chef-item" data-aos="zoom-in">
-                        <div class="chef-image">
-                            <img src="src/assets/img/photos/chef_4.jpg" alt="">
-                        </div>
-                        <div class="chef-info">
-                            <h3 class="chef-name">John Doe</h3>
-                        </div>
-                    </div>
-                    <div class="chef-item" data-aos="zoom-in">
-                        <div class="chef-image">
-                            <img src="src/assets/img/photos/chef_5.jpg" alt="">
-                        </div>
-                        <div class="chef-info">
-                            <h3 class="chef-name">John Doe</h3>
-                        </div>
-                    </div>
-                    <div class="chef-item" data-aos="zoom-in">
-                        <div class="chef-image">
-                            <img src="src/assets/img/photos/chef_6.jpg" alt="">
-                        </div>
-                        <div class="chef-info">
-                            <h3 class="chef-name">John Doe</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        {% block Chefs %} {% endblock %}
 
 
         <!-- Start .scroll-up -->
@@ -296,56 +149,7 @@
         </div><!-- End /.scroll-up -->
 
         <!--  Begin Footer  -->
-        <section class="section footer" id="contact">
-
-            <div class="footer-details">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6 col-lg-4">
-                            <img src="{% static "img/logo3.png" %}" alt="" class="footer-logo">
-                            <p class="footer-info">								
-                                Добро пожаловать в нашу пиццерию! 
-                                Мы гордимся тем, что предлагаем нашим гостям настоящую итальянскую пиццу, 
-                                приготовленную с любовью и по традиционным рецептам.
-                            </p>                            
-                        </div>
-                        {% comment %} ==== FOOTER MENU === {% endcomment %}
-                        {% include "main/nav/footer_menu.html" %}
-                        {% comment %} =============================== {% endcomment %}
-                        <div class="col-md-6 col-lg-4">
-                            <h4 class="footer-ttl">Contacts</h4>
-                            <div class="footer-contact">
-                                <div class="footer-contact_item">
-                                    <i class="icon-map-pin"></i>
-                                    <span>Your City, Your streert, 18765, 100 Tenth Avenue, New York City, NY
-                                        1001</span>
-                                </div>
-                                <div class="footer-contact_item">
-                                    <i class="icon-phone-call"></i>
-                                    <span>+91 123 456 789 0 / +91 123 456 789 0</span>
-                                </div>
-                                <div class="footer-contact_item">
-                                    <i class="icon-mail"></i>
-                                    <span>info@gmail.com</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="copyr">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div class="copyr-txt">
-                                © 2025 Дипломный проект. ЦПОИС-23п
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        {% include "main/footer.html" %}
         <!-- End Footer -->
 
     </div>

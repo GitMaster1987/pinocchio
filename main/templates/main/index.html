@@ -129,8 +129,83 @@
 
 {# *** Chef - Отображение наших шеф-поваров *** #}
 {% block Chefs %}
-    
+    <!--    Chef    -->
+    <section class="section chef" id="chef">
+        <div class="container">
+            <div class="title-block">
+                <span class="section-subtitle" data-aos="fade-up">Профессионалы своего дела</span>
+                <h1 class="section-title" data-aos="fade-up">Наши Шеф-повора</h1>
+            </div>
+            <div id="chef-slider">
+                {% for chef in chefs %}
+                    <div class="chef-item" data-aos="zoom-in">
+                        <div class="chef-image">
+                            <span class="text-chefs-item">
+                                {{chef.info}}
+                            </span>
+                            <img src="{{chef.image.url}}" alt="">                            
+                        </div>
+                        <div class="chef-info">
+                            <h3 class="chef-name">{{chef.name}} {{chef.lastName}}</h3>
+                        </div>
+                    </div>
+                {% endfor %}                
+            </div>
+        </div>
+    </section>
 {% endblock Chefs %}
+
+{# *** Special - Выбор наших пицц *** #}
+{% block  Special %}
+    <section class="section" id="special">
+        <div class="container">
+            <div class="title-block">
+                <span class="section-subtitle" data-aos="fade-up">Пицца на любой вкус</span>
+                <h1 class="section-title" data-aos="fade-up">Наши пиццы</h1>
+            </div>
+
+            <!--    Special Menu items     -->
+            <div id="special-menu" class="menu-slider">
+                {% for product in products  %}
+                    {% if product.category.slug == "pizza" %}                        
+                        <div class="menu-slider-item" data-aos="fade-up">
+                            <a href="#" class="menu-slider-item-link"></a>
+                            <div class="menu-slider-item-image">
+                                <img src="{{product.image.url}}" alt="">
+                                {% if product.discount %}
+                                    <span class="discount_special">&nbsp;- {{ product.discount|floatformat:0 }}%&nbsp;</span>
+                                {% endif %}
+                            </div>
+                            <div class="menu-slider-item-desc">
+                                <h4 class="menu-slider-item-title">{{product.name}}</h4>
+                                <p class="menu-slider-item-subtitle">
+                                   {{product.description}}
+                                </p>
+                                <div class="menu-slider-item-actions">
+                                    {% if product.discount %}
+                                        <sup>₽</sup>
+                                        <span class="menu-slider-item-price text-decoration-line-through">
+                                            {{product.price}}
+                                        </span>
+                                        <span class="menu-slider-item-price-discount">
+                                            <sup>₽</sup>{{product.sell_price|floatformat:2}}
+                                        </span>
+                                    {% else %}
+                                        <span class="menu-slider-item-price-discount">
+                                            <sup>₽</sup>{{product.sell_price|floatformat:2}}
+                                        </span>
+                                    {% endif %}                                    
+                                    <a href="#" class="menu-slider-item-btn">В корзину</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}               
+            </div>
+        </div>
+    </section>  
+{% endblock %}
+
     
 
 

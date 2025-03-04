@@ -1,4 +1,4 @@
-.cart-number{
+.cart-number {
     margin-left: 5px;
     background-color: rgba(238, 209, 173, 0.716);
     color:rgba(13, 2, 110, 0.966);
@@ -6,4 +6,100 @@
     border-radius: 85%;
     font-weight: 700;
     font-size: 16px;
+}
+/* Chefs */
+.text-chefs-item {
+    position: absolute;
+    top: 0;
+    padding: 18px 18px;   
+    height: 100%;
+    opacity: 0;    
+}
+
+@keyframes example_chefs {
+    0% {
+      background-color: antiquewhite;
+      opacity: 0;
+    }
+    25% {
+      background-color: antiquewhite;
+      opacity: .25;
+    }
+    50% {
+      background-color: antiquewhite;
+      opacity: 0.5;
+    }
+    75% {
+      background-color: antiquewhite;
+      opacity: .75;
+    }
+    100% {
+      background-color: antiquewhite;
+      opacity: .80;
+    }
+  }
+
+/* .text-chefs-item:hover {
+    opacity: 0.75;
+    background-color: blanchedalmond;
+} */
+
+.text-chefs-item:hover {
+    animation-name: example_chefs;
+    animation-duration: 1s;
+    opacity: .80;
+    background-color: antiquewhite;
+}
+
+.discount_special {
+    position: absolute;
+  top: 10%;
+  right:20%;
+  background-color: #e5f500;
+  color: #0a0101; /* Белый цвет текста */
+  font-weight: bold; /* Жирный шрифт */
+  padding: 3px 7px; /* Отступы внутри элемента */
+  border-radius: 5px; /* Сглаженные углы */
+  box-shadow: 0 2px 4px rgba(243, 0, 0, 0.2); /* Тень для объема */
+  text-align: center; /* Выравнивание текста по центру */
+  font-size: 20px; /* Размер шрифта */
+}
+.menu-slider-item-image img{
+    border-radius: 10%;
+}
+
+.login-out{
+    position: absolute;
+    color: rgba(225, 233, 241, 0.823);
+    width: 100%;
+}
+
+@media (min-width: 768px){
+    .login-out {
+      /* стили для разрешения от 768px */
+      top: 75%;
+      left: 5%;
+    }
+}
+@media (min-width: 368px){
+    .login-out {
+      /* стили для разрешения от 768px */
+      top: 75%;
+      left: 5%;
+    }
+    .affix .navbar_top{
+        height: 85px;
+    }
+}
+
+@media (min-width: 769px){
+    .login-out {
+      /* стили для разрешения от 768px */
+      top: 75%;
+      left: 5%;
+      
+    }
+    .affix .navbar_top{
+        height: 85px;
+    }
 }

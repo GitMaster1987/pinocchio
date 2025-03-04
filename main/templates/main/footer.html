@@ -1,0 +1,51 @@
+{% load static %}
+
+<section class="section footer" id="contact">
+    <div class="footer-details">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-4">
+                    <img src="{% static "img/logo3.png" %}" alt="" class="footer-logo">
+                    <p class="footer-info">								
+                        Добро пожаловать в нашу пиццерию! 
+                        Мы гордимся тем, что предлагаем нашим гостям настоящую итальянскую пиццу, 
+                        приготовленную с любовью и по традиционным рецептам.
+                    </p>                            
+                </div>
+                {% comment %} ==== FOOTER MENU === {% endcomment %}
+                {% include "main/nav/footer_menu.html" %}
+                {% comment %} =============================== {% endcomment %}
+                <div class="col-md-6 col-lg-4">
+                    <h4 class="footer-ttl">Contacts</h4>
+                    <div class="footer-contact">
+                        <div class="footer-contact_item">
+                            <i class="icon-map-pin"></i>
+                            <span>
+                                г. Донецк, ул. Пухова, 31-А
+                            </span>
+                        </div>
+                        <div class="footer-contact_item">
+                            <i class="icon-phone-call"></i>
+                            <span>+7(949) 333-55-51  / +7(949) 333-55-52</span>
+                        </div>
+                        <div class="footer-contact_item">
+                            <i class="icon-mail"></i>
+                            <span>pinocchio@example.com</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="copyr">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="copyr-txt">
+                        © 2025 Дипломный проект. ЦПОИС-23п
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

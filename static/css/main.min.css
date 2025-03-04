@@ -826,6 +826,11 @@ i[class*="icon-"] {
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
   color: #777;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 250px;
+
 }
 .menu-slider-item-actions {
   display: -webkit-box;
@@ -841,6 +846,11 @@ i[class*="icon-"] {
 }
 .menu-slider-item-price {
   color: #f22e3e;
+  font-size: 22px;
+  font-weight: 600;
+}
+.menu-slider-item-price-discount {
+  color: #0a0001;
   font-size: 22px;
   font-weight: 600;
 }
@@ -1373,21 +1383,21 @@ section.chef {
   -webkit-transform: skewX(-25deg);
   transform: skewX(-25deg);
 }
-.chef-item:hover .chef-image:after {
+/* .chef-item:hover .chef-image:after {
   -webkit-animation: shine 0.5s;
   animation: shine 0.5s;
-}
+} */
 .chef-image img {
   width: 100%;
   -webkit-transition: transform 0.5s ease;
   -o-transition: transform 0.5s ease;
   transition: transform 0.5s ease;
 }
-.chef-item:hover .chef-image img {
+/* .chef-item:hover .chef-image img {
   -webkit-transform: scale(1.03);
   -ms-transform: scale(1.03);
   transform: scale(1.03);
-}
+} */
 .chef-info {
   padding: 20px;
   background-color: #fff;

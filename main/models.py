@@ -147,3 +147,11 @@ class Chefs(models.Model):
         verbose_name="Фотография",
         validators=[validate_image_dimensions],
     )
+
+    class Meta:
+        db_table = "chefs"
+        verbose_name = "Повора"
+        verbose_name_plural = "Шеф-поворы"
+
+    def __str__(self):
+        return str(self.pk) + " - " + self.name + " " + self.lastName
