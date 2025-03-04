@@ -101,20 +101,20 @@
                                     </div>
                                 </nav>
                                 <div class="pull-right search-block d-none d-md-none d-lg-block">
-                                    <button type="button" class="btn btn-outline-warning btn-sm">
+                                    <!-- Корзина -->
+                                    <button type="button" class="btn btn-outline-warning btn-sm" title="Корзина">
                                         <i class="fa-solid fa-cart-shopping"></i>
-                                        {% comment %} <cart-text class="cart-number">1</cart-text> {% endcomment %}
+                                        <cart-text class="cart-number">0</cart-text>
                                     </button>
+                                    &nbsp;
+                                    <!-- Пользователи -->
+                                    <button type="button" class="btn btn-outline-success btn-sm" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#staticBackdrop" 
+                                            title="Учетная запись">
+                                        <i class="fa-solid fa-user" style="padding: 5px 3px;"></i>
+                                    </button>                                    
                                 </div>
-                            </div>
-                            <div id="navbar_search">
-                                <form method="post">
-                                    <input type="text" name="q" autocomplete="off" class="form-control pull-left"
-                                        value="" placeholder="Search anything">
-                                    <button type="button" class="pull-right close" id="search_close">
-                                        <i class="icon-close"></i>
-                                    </button>
-                                </form>
                             </div>
                             {% comment %} <span class="login-out">Вы вошли как: <b>TestOUT</b></span> {% endcomment %}
                         </div>
@@ -126,7 +126,7 @@
             <!-- END navigation -->
         </section>
         <!-- End hero -->
-
+        
         <!-- Special Menu Slider Start -->
         {% block  Special %} {% endblock %}
         <!-- Special Menu Slider End -->
@@ -188,11 +188,33 @@
 
     <!-- JavaScript -->
 
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">
+                    
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                ...
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Understood</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- All used plugins -->
     <script src="{% static "js/plugins.min.js" %}"></script>
 
     <!-- Custom main js -->
     <script src="{% static "js/main.min.js" %}"></script>
+    <script src="{% static "js/bootstrap.bundle.min.js" %}"></script>
 
 
 </body>
