@@ -103,4 +103,118 @@
         height: 85px;
     }
 }
+/* Авторизация пользователя */
+.login-container {
+  max-width: 100%;
+  padding: 20px;
+  background-color: #f0f5e3';
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  
+}
+.modal-body{
+  color: coral;
+  background-color: antiquewhite;
+}
+.input-color{
+  background-color: rgb(238, 245, 222);
+}
+.form-control:focus {
+  box-shadow: none;
+  border-color: #007bff;
+}
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+.form-icon {
+  width: 40px;
+  height: 40px;
+  background-color: #007bff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.input-group-text {
+  border: none;
+  background-color: #ffffff;
+}
 
+/* Регистрация пользователя */
+.registration-container {
+  max-width: 500px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.form-control:focus {
+  box-shadow: none;
+  border-color: #007bff;
+}
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+.bg-fon {
+  background: url(../img/slider-bg.jpg); /* Замените на нужный путь к изображению */
+  background-size: cover;
+  background-position: center;
+  filter: blur(10px); /* Размытие фона */
+}
+
+.bg-overlay {
+  backdrop-filter: blur(0px); /* Четкость фона внутри формы */
+}
+
+.card {
+  background-color: rgba(255, 255, 255, 0.8); /* Прозрачность фона формы */
+  border-radius: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.logo_auth_mobile{
+  margin: 0 auto;
+  position: relative;
+  width: 300px;
+  height: 80px;
+  display: none;
+}
+@media (max-width: 768px){
+  .logo_auth_mobile{
+    display: block;    
+  }
+  #user_login{
+    width: 100%;
+  }
+}
+.bg-fon {
+  background-image: url("../img/slider-bg.jpg"); /* Замените на нужный путь к изображению */
+  background-size: cover;
+  background-position: center;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  filter: blur(10px); /* Размытие фона */
+  z-index: -1;
+}
+
+.bg-overlay {
+  backdrop-filter: blur(0px); /* Четкость фона внутри формы */
+}
+
+.card {
+  background-color: rgba(255, 255, 255, 0.8); /* Прозрачность фона формы */
+  border-radius: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
