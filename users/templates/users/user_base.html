@@ -21,10 +21,15 @@
 
     <!-- My CSS File   -->
     <link rel="stylesheet" type="text/css" href="{% static "css/my.min.css" %}">
+    {# MDB Block #}
+    {% block mbb-css %}{% endblock %}
 </head>
 <body>    
     <div>
         {% block login-content %}
+        {% endblock %}
+
+        {% block Register %}
         {% endblock %}
         <!-- end container -->
     </div>
@@ -36,5 +41,6 @@
 <!-- Custom main js -->
 <script src="{% static "js/main.min.js" %}"></script>
 <script src="{% static "js/bootstrap.bundle.min.js" %}"></script>
+{% block mbd-js %}{% endblock %}
 </body>
 </html>
