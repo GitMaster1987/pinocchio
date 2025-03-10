@@ -106,19 +106,17 @@
                                         <i class="fa-solid fa-cart-shopping"></i>
                                         <cart-text class="cart-number">0</cart-text>
                                     </button>
-                                    {% comment %} &nbsp;
+                                    &nbsp;
                                     <!-- Пользователи -->
                                     <button type="button" class="btn btn-outline-success btn-sm" 
                                             data-bs-toggle="modal" 
                                             data-bs-target="#usersBackdrop" 
                                             title="Учетная запись">
                                         <i class="fa-solid fa-user" style="padding: 5px 3px;"></i>
-                                    </button>                                     {% endcomment %}
+                                    </button>                                    
                                 </div>
                             </div>
-                            {% if user.is_authenticated %}
-                                <span class="login-out"><user-text>Вы вошли как:</user-text> <b>{{user.username}}</b></span>
-                            {% endif %}
+                            {% comment %} <span class="login-out">Вы вошли как: <b>TestOUT</b></span> {% endcomment %}
                         </div>
                         <!-- /.navbar_top -->
                     </div>

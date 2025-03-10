@@ -1,5 +1,5 @@
 {# *** Регистрация пользователя на сайте *** #}
-{% extends "user_base.html" %}
+{% extends "users/user_base.html" %}
 {% load static %}
 {% block Ttle %} Регистрация пользователя {% endblock Ttle %}
 {% block mbb-css %}
@@ -20,84 +20,50 @@
             <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
                 <div class="card-body p-4 p-md-5">
                 <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Форма регистрации</h3>
-               
-                <form action={% url "user:register" %} method="post">
-                    {% csrf_token %}
-                    {#=== Ввод логина === #}
-                    {% if form.username.errors %}
-                        <div class="invalid-feedback1">
-                            {{form.username.errors}}
+                <form>
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <input type="text" id="lastName" class="form-control form-control-lg" />
+                        <label class="form-label" for="lastName">Login *</label>
+                    </div>    
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+        
+                            <div data-mdb-input-init class="form-outline">
+                            <input type="text" id="firstName" class="form-control form-control-lg" />
+                            <label class="form-label" for="firstName">Имя</label>
+                            </div>
+        
                         </div>
-                    {% endif %}                    
-                    <div data-mdb-input-init class="form-outline mb-4">                        
-                        <input type="text" 
-                               id="id_username" 
-                               class="form-control form-control-lg"
-                               value="{% if form.username.value %} {{form.username.value}} {% endif %}"
-                               name="username"
-                               required/>                               
-                        <label class="form-label" for="id_username">Login *</label>                        
+                        <div class="col-md-6 mb-4">
+        
+                            <div data-mdb-input-init class="form-outline">
+                            <input type="text" id="lastName" class="form-control form-control-lg" />
+                            <label class="form-label" for="lastName">Фамилия</label>
+                            </div>
+        
+                        </div>
+                    </div>   
+                    <div class="row">
+                        <div class="col-md-6 mb-4 pb-2">
+        
+                            <div data-mdb-input-init class="form-outline">
+                            <input type="email" id="emailAddress" class="form-control form-control-lg" />
+                            <label class="form-label" for="emailAddress">Email *</label>
+                            </div>
+        
+                        </div>
+                        <div class="col-md-6 mb-4 pb-2">
+        
+                            <div data-mdb-input-init class="form-outline">
+                            <input type="tel" id="phoneNumber" class="form-control form-control-lg" />
+                            <label class="form-label" for="phoneNumber">Телефон *</label>
+                            </div>
+        
+                        </div>
                     </div>
                     
-                    {#== Вводим имя и фамилию (Не обязательные поля) === #}
-                    <div data-mdb-input-init class="form-outline mb-4">                        
-                        <input type="text" 
-                                id="id_first_name" 
-                                class="form-control form-control-lg"
-                                value="{% if form.first_name.value %} {{form.first_name.value}} {% endif %}" 
-                                name="first_name"/>
-                                <label class="form-label" for="id_first_name">Имя</label>                        
-                    </div>
-                    <div data-mdb-input-init class="form-outline mb-4">                        
-                        <input type="text" 
-                                id="id_last_name" 
-                                class="form-control form-control-lg"
-                                value="{% if form.last_name.value %} {{form.last_name.value}} {% endif %}" 
-                                name="last_name"/>
-                        <label class="form-label" for="id_last_name">Фамилия</label>                        
-                    </div>    
-                     {#=== Вводим Email и номер телефона === #} 
-                    <div data-mdb-input-init class="form-outline mb-4">                        
-                        <input type="email" 
-                                id="id_email" 
-                                class="form-control form-control-lg"
-                                value="{% if form.email.value %} {{form.email.value}} {% endif %}" 
-                                name="email"
-                                required/>
-                        <label class="form-label" for="id_email">Email *</label>                        
-                    </div>
-                    <div data-mdb-input-init class="form-outline mb-4">                        
-                        <input type="tel" 
-                                id="id_phone_number" 
-                                class="form-control form-control-lg"
-                                value="{% if form.phone_number.value %} {{form.phone_number.value}} {% endif %}" 
-                                name="phone_number"
-                                required/>
-                        <label class="form-label" for="id_phone_number">Телефон *</label>                
-                    </div>
-                     {#=== Вводим пароль и подтверждаем пароль === #}
-                    <div data-mdb-input-init class="form-outline mb-4">                        
-                        <input type="password" 
-                                id="id_password1" 
-                                class="form-control form-control-lg" 
-                                value="{% if form.password1.value %} {{form.password1.value}} {% endif %}"
-                                name="password1"
-                                required/>
-                        <label class="form-label" for="id_password1">Пароль *</label>         
-                    </div>
-                    <div data-mdb-input-init class="form-outline mb-4">                        
-                        <input type="password" 
-                                id="id_password2" 
-                                class="form-control form-control-lg"
-                                value="{% if form.password2.value %} {{form.password2.value}} {% endif %}" 
-                                name="password2"
-                                required/>
-                        <label class="form-label" for="id_password2">Подтверждение пароля *</label>            
-                    </div>
-                     {#=== Кнопка отправки формы === #}
                     <div class="mt-4 pt-2">
-                        
-                        <input data-mdb-ripple-init class="btn btn-secondary btn-lg btn-block waves-effect waves-light" type="submit" value="Зарегистрировать" />                        
+                        <input data-mdb-ripple-init class="btn btn-primary btn-lg" style="width: 100%;" type="submit" value="Зарегистрировать" />                        
                     </div>
                     <p>
                         <br>
@@ -105,13 +71,6 @@
                             <i class="fa-solid fa-backward"></i> &nbsp;&nbsp;
                             Вернуться на главную
                         </a>
-                    </p>
-                    <p>
-                        <span class="text-secondary">Всполнили пароль?</span>                        
-                        <a href=" {% url "user:login" %} " class="text-success" >
-                            <i class="fa-solid fa-backward"></i> &nbsp;&nbsp;
-                            Авторизация
-                        </a>                        
                     </p>    
                 </form>
                 </div>
