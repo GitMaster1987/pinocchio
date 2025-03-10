@@ -3,10 +3,10 @@ from django.contrib import auth
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
+
 from users.forms import UserLoginForm
 
 
-# Create your views here.
 # Авторизация пользователя
 def login(request):
 
