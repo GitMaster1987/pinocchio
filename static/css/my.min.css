@@ -84,8 +84,9 @@
 @media (min-width: 368px){
     .login-out {
       /* стили для разрешения от 768px */
-      top: 75%;
+      top: 74%;
       left: 5%;
+      
     }
     .affix .navbar_top{
         height: 85px;
@@ -245,7 +246,7 @@
     display: block;
     margin: 0 auto;
     position: absolute;
-    top: 12%;    
+    top: 7%;    
     left: 50%;
     transform: translate(-50%, -30%);   
     width: 350px;
@@ -254,8 +255,9 @@
 
   @media (max-width: 770px){
     .logo_register_mobile{
-      width: 250px;
-      height: 60px;    
+      top:3%;
+      width: 150px;
+      height: 30px;    
     }
     
   }
@@ -264,3 +266,37 @@
     margin-right: 25px;
     padding: 8px;
   }
+
+  user-text{
+    color: #b0d4fa;
+  }
+  #user-logout{
+    font-weight: 700;
+    color: rgb(24, 159, 255);
+  }
+  #user-login{
+    font-weight: 700;
+    color: rgb(24, 255, 240);
+  }
+  .errorlist{
+    list-style: none;
+  }
+
+  .invalid-feedback1{
+    position: relative;
+    top: 0;
+    width: 100%;
+    margin-top: .25rem;
+    font-size: 80%;
+    color: #f15050;
+}
+
+.col-md-6 {
+  margin-bottom: 20px; /* или любое другое значение */
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Регулируйте по мере необходимости */
+}
