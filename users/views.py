@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
-from users.forms import UserLoginForm
+from users.forms import UserLoginForm, UserRegistrationForm
 
 
 # Авторизация пользователя
@@ -40,8 +40,20 @@ def login(request):
 
 # Регистрация пользователя
 def register(request):
+    if request.method == "POST":
+        form = UserRegistrationForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            user = form.instance
+            auth.login(request, user)
+            return HttpResponseRedirect(reverse("main:index"))
+    else:
+        form = UserRegistrationForm()
 
-    return render(request, "users/registration.html")
+    context = {
+        "form": form,
+    }
+    return render(request, "users/register.html", context)
 
 
 # Выход

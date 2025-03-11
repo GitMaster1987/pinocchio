@@ -1,0 +1,153 @@
+{% extends "user_base.html" %}
+{% load static %}
+
+{% load static %}
+{% block Ttle %} Регистрация пользователя {% endblock Ttle %}
+{% block mbb-css %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/mdb/mdb.min.css" %}">
+{% endblock mbb-css %}
+{% block mbd-js %}
+    <script src="{% static "js/mdb/mdb.umd.min.js" %}"></script>
+{% endblock mbd-js %}
+{#=== Block Validate Scripts ===#}
+{% block validate-scripts %}
+    <script src="{% static "validate/jquery-3.6.0.min.js" %}"></script>   
+    <script src="{% static "validate/jquery.validate.min.js" %}"></script>   
+    <script src="{% static "validate/my.script.validate.js" %}"></script>   
+    <script src="{% static "validate/jquery.maskedinput.min.js" %}"></script>  
+{% endblock validate-scripts %}
+
+{% block Register %}
+
+    <div class="bg-fon"></div> 
+    <section class="vh-100 gradient-custom">
+        <img src="{% static 'img/logo3.png' %}" class="logo_register_mobile" alt="logo">
+        <div class="container py-5 h-100">
+            <div class="row justify-content-center align-items-center h-100">
+                <div class="col-12 col-lg-9 col-xl-7">
+                    <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                        <div class="card-body p-4 p-md-5">
+                            <p>
+                                <span class="text-secondary">Всполнили пароль?</span>
+                                <a href=" {% url "user:login" %} " class="text-success" >
+                                    <i class="fa-solid fa-backward"></i> &nbsp;&nbsp;
+                                    Авторизация
+                                </a>
+                            </p>
+                            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Форма регистрации</h3>
+                            
+                            <form id="registrationForm" action="{% url "user:register" %}" method="post">
+                                {% csrf_token %}
+                                    {# === Вводим логин === #}
+                                <div class="row mb-3">
+                                    <label class="col-sm-3 col-form-label" for="id_username">Логин <i class="red-star">*</i></label>
+                                    <div class="col-sm-9">
+                                        <input type="text" 
+                                                id="id_username" 
+                                                class="form-control form-control-lg"
+                                                value="{% if form.username.value %} {{form.username.value}} {% endif %}"
+                                                name="username"
+                                                required
+                                                placeholder="Ваш Логин"/>
+                                    </div>
+                                </div>
+                                {# === Вводим имя === #}
+                                <div class="row mb-3">
+                                    <label class="col-sm-3 col-form-label" for="id_first_name">Ваше имя <i class="red-star">*</i></label>
+                                    <div class="col-sm-9">
+                                        <input type="text" 
+                                                id="id_first_name" 
+                                                class="form-control form-control-lg"
+                                                value="{% if form.first_name.value %} {{form.first_name.value}} {% endif %}" 
+                                                name="first_name"
+                                                placeholder="Имя"/>
+                                    </div>
+                                </div>
+                                {# === Вводим фамилию === #}
+                                <div class="row mb-3">
+                                    <label class="col-sm-3 col-form-label" for="id_last_name">Ваша Фамилия <i class="red-star">*</i></label>
+                                    <div class="col-sm-9">
+                                        <input type="text" 
+                                                id="id_last_name" 
+                                                class="form-control form-control-lg"
+                                                value="{% if form.last_name.value %} {{form.last_name.value}} {% endif %}" 
+                                                name="last_name"
+                                                placeholder="Фамилия"/>
+                                    </div>
+                                </div>
+                                {# === Вводим Email adress === #}
+                                <div class="row mb-3">
+                                    <label for="id_email" class="col-sm-3 col-form-label">Ваш Email <i class="red-star">*</i></label>
+                                    <div class="col-sm-9">
+                                        <input type="email" 
+                                                id="id_email" 
+                                                class="form-control form-control-lg"
+                                                value="{% if form.email.value %} {{form.email.value}} {% endif %}" 
+                                                name="email"
+                                                required
+                                                placeholder="Email"/>
+                                    </div>
+                                </div>
+                                {# === Вводим Телефон === #}
+                                <div class="row mb-3">
+                                    <label for="id_phone_number" class="col-sm-3 col-form-label">Ваш телефон <i class="red-star">*</i></label>
+                                    <div class="col-sm-9">
+                                        <input type="tel" 
+                                                id="id_phone_number" 
+                                                class="form-control form-control-lg"
+                                                value="{% if form.phone_number.value %} {{form.phone_number.value}} {% endif %}" 
+                                                name="phone_number"
+                                                required
+                                                placeholder="+7 (___) ___-__-__"/>
+                                    </div>
+                                </div>
+                                {# === Вводим Пароль - 1 === #}
+                                <div class="row mb-3">
+                                    <label for="id_password1" class="col-sm-3 col-form-label">Ваш пароль <i class="red-star">*</i></label>
+                                    <div class="col-sm-9">
+                                        <input type="password" 
+                                                id="id_password1" 
+                                                class="form-control form-control-lg" 
+                                                value="{% if form.password1.value %} {{form.password1.value}} {% endif %}"
+                                                name="password1"
+                                                required
+                                                placeholder="Ваш пароль"/>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="id_password2" class="col-sm-3 col-form-label">Повтор пароля <i class="red-star">*</i></label>
+                                    <div class="col-sm-9">
+                                        <input type="password" 
+                                                id="id_password2" 
+                                                class="form-control form-control-lg"
+                                                value="{% if form.password2.value %} {{form.password2.value}} {% endif %}" 
+                                                name="password2"
+                                                required
+                                                placeholder="Повторите пароль"/>
+                                    </div>
+                                </div>								
+                                <div class="row">
+                                    <label class="col-sm-3 col-form-label"></label>
+                                    <div class="col-sm-9">
+                                        <div class="d-md-flex d-grid align-items-center gap-3">
+                                            <button type="submit" class="btn btn-primary px-4" name="submit2">Регистрация</button>
+                                            <button type="reset" class="btn btn-light px-4">Сброс формы</button>
+                                        </div>
+                                    </div>
+                                </div>
+							</form>
+                            <p>
+                                <br>
+                                <a href=" {% url "main:index" %} " >
+                                    <i class="fa-solid fa-backward"></i> &nbsp;&nbsp;
+                                    Вернуться на главную
+                                </a>
+                            </p>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+    

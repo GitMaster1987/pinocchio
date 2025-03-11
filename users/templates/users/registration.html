@@ -8,9 +8,17 @@
 {% block mbd-js %}
     <script src="{% static "js/mdb/mdb.umd.min.js" %}"></script>
 {% endblock mbd-js %}
+{#=== Block Validate Scripts ===#}
+{% block validate-scripts %}
+    <script src="{% static "validate/jquery-3.6.0.min.js" %}"></script>   
+    <script src="{% static "validate/jquery.validate.min.js" %}"></script>   
+    <script src="{% static "validate/my.script.validate.js" %}"></script>   
+{% endblock validate-scripts %}
+
 
 
 {% block Register %}
+
 <div class="bg-fon"></div>  
 <section class="vh-100 gradient-custom">
     <img src="{% static "img/logo3.png" %}" class="logo_register_mobile" alt="logo">
@@ -19,9 +27,8 @@
             <div class="col-12 col-lg-9 col-xl-7">
             <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
                 <div class="card-body p-4 p-md-5">
-                <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Форма регистрации</h3>
-               
-                <form action={% url "user:register" %} method="post">
+                <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Форма регистрации</h3>            
+                <form id="registrationForm" action={% url "user:register" %} method="post">
                     {% csrf_token %}
                     {#=== Ввод логина === #}
                     {% if form.username.errors %}
@@ -36,7 +43,7 @@
                                value="{% if form.username.value %} {{form.username.value}} {% endif %}"
                                name="username"
                                required/>                               
-                        <label class="form-label" for="id_username">Login *</label>                        
+                        <label class="form-label" for="id_username">Логин *</label>                        
                     </div>
                     
                     {#== Вводим имя и фамилию (Не обязательные поля) === #}

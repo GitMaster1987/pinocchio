@@ -280,11 +280,11 @@
   display: block;
   margin: 0 auto;
   position: absolute;
-  top: 7%;
+  top: 6%;
   left: 50%;
   transform: translate(-50%, -30%);
-  width: 350px;
-  height: 100px;
+  width: 200px;
+  height: 50px;
 }
 
 @media (max-width: 770px) {
@@ -326,4 +326,12 @@ user-text {
   margin-top: .25rem;
   font-size: 80%;
   color: #f15050;
+}
+
+.red-star{
+  color: red;
+}
+.error{
+  color: red;
+  font-size: 0.875em;
 }

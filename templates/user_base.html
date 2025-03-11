@@ -23,6 +23,7 @@
     <link rel="stylesheet" type="text/css" href="{% static "css/my.min.css" %}">
     {# MDB Block #}
     {% block mbb-css %}{% endblock %}
+    {% block validate-scripts %}{% endblock %}
 </head>
 <body>    
     <div>
@@ -35,12 +36,13 @@
     </div>
     <!-- end page -->
 
-<!-- All used plugins -->
-<script src="{% static "js/plugins.min.js" %}"></script>
-
-<!-- Custom main js -->
-<script src="{% static "js/main.min.js" %}"></script>
 <script src="{% static "js/bootstrap.bundle.min.js" %}"></script>
 {% block mbd-js %}{% endblock %}
+<script>
+    $("#id_phone_number").click(function(){
+        $(this).setCursorPosition(3);
+      }).mask("+7 (999) 999-99-99");
+    //$("#id_phone_number").mask("+7 (999) 999-99-99");
+</script> 
 </body>
 </html>
