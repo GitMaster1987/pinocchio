@@ -1,6 +1,6 @@
 from pyexpat import model
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordResetForm
 from django.forms import fields
 
 from users.models import User
@@ -58,3 +58,14 @@ class UserRegistrationForm(UserCreationForm):
     phone_number = forms.CharField()
     password1 = forms.CharField()
     password2 = forms.CharField()
+
+# Форма для восстановления пароля пользователя
+class PasswordResetRequestForm(PasswordResetForm):
+    
+    class Meta:
+        model = User
+        fields = (            
+            "email",            
+        )  
+
+    email = forms.EmailField(max_length=100)    

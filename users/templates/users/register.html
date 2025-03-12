@@ -16,7 +16,15 @@
     <script src="{% static "validate/my.script.validate.js" %}"></script>   
     <script src="{% static "validate/jquery.maskedinput.min.js" %}"></script>  
 {% endblock validate-scripts %}
-
+{#=== Ввод номера телефона ===#}
+{% block phone_script %}
+    <script>
+        $("#id_phone_number").click(function(){
+            $(this).setCursorPosition(3);
+        }).mask("+7 (999) 999-99-99");
+    </script>
+{% endblock  %}
+{#=== Блок формы регистрации ===#}
 {% block Register %}
 
     <div class="bg-fon"></div> 
@@ -34,21 +42,21 @@
                                     Авторизация
                                 </a>
                             </p>
-                            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Форма регистрации</h3>
+                            <h2 class="mb-4 pb-2 pb-md-0 mb-md-5">Форма регистрации</h2>
                             
                             <form id="registrationForm" action="{% url "user:register" %}" method="post">
                                 {% csrf_token %}
                                     {# === Вводим логин === #}
                                 <div class="row mb-3">
-                                    <label class="col-sm-3 col-form-label" for="id_username">Логин <i class="red-star">*</i></label>
+                                    <label class="col-sm-3 col-form-label" for="id_username">Ваш логин <i class="red-star">*</i></label>
                                     <div class="col-sm-9">
                                         <input type="text" 
-                                                id="id_username" 
-                                                class="form-control form-control-lg"
-                                                value="{% if form.username.value %} {{form.username.value}} {% endif %}"
-                                                name="username"
-                                                required
-                                                placeholder="Ваш Логин"/>
+                                               id="id_username" 
+                                               class="form-control form-control-lg"
+                                               value="{% if form.username.value %} {{form.username.value}} {% endif %}"
+                                               name="username"
+                                               required
+                                               placeholder="Ваш Логин"/>
                                     </div>
                                 </div>
                                 {# === Вводим имя === #}
@@ -114,6 +122,7 @@
                                                 placeholder="Ваш пароль"/>
                                     </div>
                                 </div>
+                                {# === Вводим Пароль - 2 === #}
                                 <div class="row mb-3">
                                     <label for="id_password2" class="col-sm-3 col-form-label">Повтор пароля <i class="red-star">*</i></label>
                                     <div class="col-sm-9">
@@ -125,7 +134,8 @@
                                                 required
                                                 placeholder="Повторите пароль"/>
                                     </div>
-                                </div>								
+                                </div>
+                                {# === Кнопка отправки формы и сброса формы === #}								
                                 <div class="row">
                                     <label class="col-sm-3 col-form-label"></label>
                                     <div class="col-sm-9">

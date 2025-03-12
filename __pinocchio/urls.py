@@ -18,7 +18,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from django.conf.urls.static import static
-
+from django.contrib.auth import views
 from __pinocchio import settings
 
 urlpatterns = [
@@ -27,6 +27,7 @@ urlpatterns = [
     path("", include("main.urls", namespace="main")),
     # ''' Users '''
     path("user/", include("users.urls", namespace="user")),
+
 ]
 
 if settings.DEBUG:

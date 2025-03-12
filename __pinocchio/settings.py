@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-=oh65%mc(mp*fr*lhld*-p9jx5qvs@u8)kogaf=(zj(58_&i_c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -142,3 +142,21 @@ AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = '/user/login/'
 
 SESSION_COOKIE_AGE = 82800
+
+# Настройка отправки почты
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'  # Замените на ваш SMTP сервер
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'meetnight1027@yandex.ru'
+EMAIL_HOST_PASSWORD = 'rngrbsxvjxgydtlq'
+
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.mail.ru'
+# EMAIL_PORT = 465
+# EMAIL_HOST_USER = 'a.docenko_1027@mail.ru'
+# EMAIL_HOST_PASSWORD = '//ljwtyrj1027'
+# DEFAULT_FROM_EMAIL = 'a.docenko_1027@mail.ru'
+# DEFAULT_TO_EMAIL = 'a.docenko_1027@mail.ru'
+
+

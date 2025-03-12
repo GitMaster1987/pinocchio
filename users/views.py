@@ -1,10 +1,22 @@
+import email
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
-
-from users.forms import UserLoginForm, UserRegistrationForm
+from django.core.mail import send_mail
+from users.forms import PasswordResetRequestForm, UserLoginForm, UserRegistrationForm
+from users.models import User
+from django.contrib.auth.forms import SetPasswordForm
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_decode
+from django.utils.encoding import force_str
+from django.shortcuts import get_object_or_404
+from django.utils.crypto import get_random_string
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.contrib.auth.tokens import default_token_generator
 
 
 # Авторизация пользователя
@@ -61,3 +73,56 @@ def register(request):
 def logout(request):
     auth.logout(request)
     return redirect(reverse("main:index"))
+
+
+# Сброс пароля пользователя
+
+def password_reset_request(request):
+    if request.method == "POST":
+        form = PasswordResetRequestForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            try:
+                user = User.objects.get(email=email)
+                token = default_token_generator.make_token(user)
+                uid = urlsafe_base64_encode(force_bytes(user.pk))
+                protocol = 'https' if request.is_secure() else 'http'
+                domain = request.get_host()
+                reset_url = reverse('user:password_reset_confirm', kwargs={'uidb64': uid, 'token': token})
+                full_url = f'{protocol}://{domain}{reset_url}'
+                mail_subject = 'Сброс пароля'
+                message = render_to_string('users/resset/password_reset_email.html', {
+                    'user': user,
+                    'protocol': protocol,
+                    'domain': domain,
+                    'uid': uid,
+                    'token': token,
+                    'reset_url': full_url,
+                })
+                send_mail(mail_subject, message, 'meetnight1027@yandex.ru', [email], fail_silently=False)
+                return redirect('user:password_reset_done')
+            except User.DoesNotExist:
+                form.add_error('email', 'Пользователь с таким email не найден.')
+    else:
+        form = PasswordResetRequestForm()
+    return render(request, 'users/resset/password_reset.html', {'form': form})
+
+def password_reset_confirm(request, uidb64=None, token=None):
+    if uidb64 is not None and token is not None:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = get_object_or_404(User, pk=uid)
+
+        if default_token_generator.check_token(user, token):
+            if request.method == "POST":
+                form = SetPasswordForm(user, request.POST)
+                if form.is_valid():
+                    form.save()
+                    return redirect('user:password_reset_complete')
+            else:
+                form = SetPasswordForm(user)
+            return render(request, 'users/resset/password_reset_confirm.html', {'form': form})
+        else:
+            return render(request, 'users/resset/password_reset_invalid.html')
+
+def password_reset_complete(request):
+    return render(request, 'users/resset/password_reset_complete.html')

@@ -23,26 +23,29 @@
     <link rel="stylesheet" type="text/css" href="{% static "css/my.min.css" %}">
     {# MDB Block #}
     {% block mbb-css %}{% endblock %}
-    {% block validate-scripts %}{% endblock %}
+    
 </head>
 <body>    
     <div>
+        {#=== Блок авторизации пользователя ===#}
         {% block login-content %}
         {% endblock %}
-
+        {#=== Блок регистрации пользователя ===#}
         {% block Register %}
         {% endblock %}
+        {#=== Блоки восстановления пароля ===#}
+            {#=== Указываем почту для восстановления ===#}
+        {% block password_reset %}
+        {% endblock %}
+
         <!-- end container -->
+
     </div>
     <!-- end page -->
 
 <script src="{% static "js/bootstrap.bundle.min.js" %}"></script>
 {% block mbd-js %}{% endblock %}
-<script>
-    $("#id_phone_number").click(function(){
-        $(this).setCursorPosition(3);
-      }).mask("+7 (999) 999-99-99");
-    //$("#id_phone_number").mask("+7 (999) 999-99-99");
-</script> 
+{% block validate-scripts %}{% endblock %}
+{% block phone_script %} {% endblock %}
 </body>
 </html>
