@@ -131,8 +131,9 @@
 }
 
 .modal-body {
-  color: coral;
-  background-color: antiquewhite;
+  color: rgb(2, 25, 38);
+  background: rgba(155, 182, 246, 0.673);
+  
 }
 
 .input-color {
@@ -334,4 +335,82 @@ user-text {
 .error{
   color: red;
   font-size: 0.875em;
+}
+/* Корзина товаров пользователя */
+.cart-item {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.cart-item-img {
+  width: 100%;
+  max-width: 80px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 6px;
+}
+.modal-header {
+  background-color: #007bff;
+  color: white;
+}
+.cart-total {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+.btn-outline-secondary {
+  border-color: #007bff;
+  color: #007bff;
+}
+.btn-outline-secondary:hover {
+  background-color: #007bff;
+  color: white;
+}
+.btn-danger {
+  border-radius: 6px;
+}
+.btn-success {
+  background-color: #28a745;
+}
+.modal-footer {
+  border-top: 2px solid #eee;
+  background-color: #e6e6e6;
+}
+.znak-products{
+  padding-left: 10px;
+  padding-right: 10px;
+}
+#totalQuantity{
+  font-weight: 700;
+  color: blue;
+}
+#totalPrice{
+  color: #28a745;
+}
+#cartModalLabel{
+  color: #edf2c5;
+}
+/* Убираем лишнее отступы для мобильных устройств */
+@media (max-width: 576px) {
+  .cart-item {
+      flex-wrap: wrap;
+  }
+  .cart-item-img {
+      margin-bottom: 10px;
+  }
+  .cart-item .flex-grow-1,
+  .cart-item .d-flex {
+      width: 100%;
+      justify-content: space-between;
+  }
+  .cart-delete{
+    position: absolute;
+    top: 10%;
+    right: 10%;    
+    margin-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;   
+  }
 }
