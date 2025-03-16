@@ -1,0 +1,98 @@
+{% load static %}
+
+<div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Заголовок модального окна корзины -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="cartModalLabel">
+                    <i class="fa-solid fa-basket-shopping"></i>&nbsp;&nbsp;Ваша корзина
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="position: absolute; right: 1rem; top: 1rem;"></button>
+            </div>
+
+            <!-- Тело модального окна корзины-->
+            <div class="modal-body">
+                <div id="cartItems">
+                    <!-- Перечень товаров -->
+                    <div class="cart-item d-flex align-items-center">
+                        <img src="{% static 'img/pizza/shirmp-pizza.png' %}" alt="Товар" class="cart-item-img me-3">
+                        <div class="flex-grow-1">
+                            <h5 class="mb-1">Название товара</h5>
+                            <p class="mb-1">Цена: <span class="item-price" data-price="1500">1500</span> ₽</p>
+                            <div class="small text-muted">Категория: Электроника</div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <button class="btn btn-outline-secondary btn-sm me-2 znak-products" onclick="updateQuantity(this, -1)">
+                                <i class="fa-solid fa-minus"></i>
+                            </button>
+                            <input type="text" value="1" min="1" 
+                                   class="form-control form-control-sm text-center" 
+                                   style="width: 60px;" 
+                                   readonly>
+                            <button class="btn btn-outline-secondary btn-sm ms-2 znak-products" onclick="updateQuantity(this, 1)">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                        {# Кнопка удаления из корзины #}
+                        <button class="btn btn-danger btn-sm ms-3 cart-delete" onclick="removeItem(this)">
+                            <a href="{% url "cart:cart_remove" 1 %}" class="col_cart_del">
+                                <i class="fa-solid fa-trash"></i>
+                            </a> 
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Нижняя часть модального окна -->
+            <div class="modal-footer flex-column align-items-start">
+                <!-- Общая информация всегда отображается -->
+                <div class="w-100 mb-3">
+                    <p class="mb-1">Общее количество: <span id="totalQuantity">1</span></p>
+                    <p class="cart-total">Общая цена: <span id="totalPrice">1500</span> ₽</p>
+                </div>
+                
+                {% if user.is_authenticated %}
+                <!-- Радиокнопки для выбора способа оплаты -->
+                <div class="w-100 mb-3">
+                    <p>Выберите способ оплаты:</p>
+                    <form class="d-flex flex-column">
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" name="paymentMethod" id="paymentCash" value="cash">
+                            <label class="form-check-label" for="paymentCash">
+                                💵 Наличными/Картой при получении
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="paymentMethod" id="paymentCard" value="card">
+                            <label class="form-check-label" for="paymentCard">
+                                💳 Оплатить картой
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                {% else %}
+                <!-- Блок для авторизации или регистрации -->
+                <div id="authNotice" class="w-100 text-center mb-3">
+                    <p>Оформление заказа доступно только <strong>авторизованным</strong> пользователям.</p>
+                    <a href="{% url "user:login" %}" class="btn btn-link">
+                        <i class="fa-regular fa-user"></i> Войти
+                    </a>
+                    <a href="{% url "user:register" %}" class="btn btn-link">
+                        <i class="fa-solid fa-registered"></i> Регистрация
+                    </a>
+                </div>
+                {% endif %}
+                <hr class="hr" />
+                <!-- Кнопки "Оформить заказ" и "Закрыть" -->
+                <div class="d-flex justify-content-between w-100">
+                    {% if user.is_authenticated %}
+                        <hr>
+                        <button type="button" class="btn btn-success" id="checkoutButton" onclick="placeOrder()">Оформить заказ</button>
+                    {% endif %}
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # #############################
     'main',
     'users',
+    'carts',
 ]
 
 MIDDLEWARE = [
@@ -150,13 +151,3 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'meetnight1027@yandex.ru'
 EMAIL_HOST_PASSWORD = 'rngrbsxvjxgydtlq'
-
-# EMAIL_USE_TLS = True
-# EMAIL_HOST = 'smtp.mail.ru'
-# EMAIL_PORT = 465
-# EMAIL_HOST_USER = 'a.docenko_1027@mail.ru'
-# EMAIL_HOST_PASSWORD = '//ljwtyrj1027'
-# DEFAULT_FROM_EMAIL = 'a.docenko_1027@mail.ru'
-# DEFAULT_TO_EMAIL = 'a.docenko_1027@mail.ru'
-
-

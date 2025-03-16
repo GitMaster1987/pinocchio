@@ -414,3 +414,7 @@ user-text {
     padding-right: 10px;   
   }
 }
+.col_cart_del{
+  text-decoration: none;
+  color: #ffffff;
+}
