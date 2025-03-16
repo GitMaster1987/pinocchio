@@ -3,6 +3,9 @@
 {# Title-Block #}
 {% block Title %}{{title}}{% endblock %}
 
+{% block main_section %}
+    {% include "includes/main_section.html" %}
+{% endblock %}
 {# *** Banner - Block *** #}
 {% block Banners %}
     <div id="carouselExample" class="carousel slide w-100" data-bs-ride="carousel"  data-bs-interval="4000">
@@ -115,7 +118,12 @@
                                         </div>                                        
                                     </div>                                    
                                 </div>
-                                <button type="button" class="btn btn-primary btn-sm button_cart_add"><i class="fa-solid fa-cart-plus"></i> В корзину</button>
+                                <a type="button"
+                                   href="{% url "cart:cart_add" product.pk %}" 
+                                   class="btn btn-primary btn-sm button_cart_add">
+                                   <i class="fa-solid fa-cart-plus"></i> 
+                                   В корзину
+                                </a>
                             </div>
                             {% endif %}
                         {% endfor %}                         

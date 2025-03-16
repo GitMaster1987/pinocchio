@@ -69,63 +69,13 @@
 
     <!-- BEGIN body wrapper -->
     <div class="body-wrapper">
-
-        <!-- Begin hero-->
         <section id="main">
-
-            <!-- BEGIN carousel -->
-            {% block Banners %}{% endblock %}
-            <!-- END carousel -->
-
-            <!-- BEGIN navigation -->
-            <div class="navigation">
-                <div class="navbar-container" data-spy="affix" data-offset-top="400">
-                    <div class="container">
-                        <div class="navbar_top">
-                            <div class="top_addr">
-                                <nav class="navbar">
-                                    <div id="navbar_content">
-                                        <!-- Brand and toggle get grouped for better mobile display -->
-                                        <div class="navbar-header">                                            
-                                            <a class="navbar-brand" href="#">
-                                                <img src="{% static "img/logo3.png" %}" alt="logo">
-                                            </a>                                            
-                                        </div>
-                                        <a href="#cd-nav" class="cd-nav-trigger right_menu_icon">
-                                            <span><i class="icon-menu"></i></span>
-                                        </a>
-
-                                        <!-- Collect the nav links, forms, and other content for toggling -->
-                                        {% include "main/nav/header_menu.html" %}
-                                        <!-- /.navbar-collapse -->
-                                    </div>
-                                </nav>
-                                <div class="pull-right search-block d-none d-md-none d-lg-block">
-                                    <!-- Корзина -->
-                                    <button type="button" 
-                                            class="btn btn-outline-warning btn-sm" 
-                                            title="Корзина"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#cartModal">
-                                        <i class="fa-solid fa-cart-shopping"></i>
-                                        <cart-text class="cart-number">0</cart-text>
-                                    </button>
-                                    <!-- Корзина END -->
-                                </div>
-                            </div>
-                            {% if user.is_authenticated %}
-                                <span class="login-out"><user-text>Вы вошли как:</user-text> <b>{{user.username}}</b></span>
-                            {% endif %}
-                        </div>
-                        <!-- /.navbar_top -->
-                    </div>
-                </div>
-                <!-- /.navbar-container -->
-            </div>
-            <!-- END navigation -->
+        <!-- BEGIN carousel -->
+        {% block Banners %}{% endblock %}
+        <!-- END carousel -->
         </section>
-        <!-- End hero -->
-        
+        <!-- Begin hero-->
+        {% block main_section %}{% endblock %}
         <!-- Special Menu Slider Start -->
         {% block  Special %} {% endblock %}
         <!-- Special Menu Slider End -->
@@ -184,9 +134,7 @@
     <!-- /.cd-overlay -->   
     <!-- END mobile right burger menu -->
     {#**********************************************************#}
-    <!-- Модальное окно для корзины товаров -->
-    {% include "carts/included_cart.html" %}
-    <!-- Закончилось Модальное окно для корзины товаров -->
+   
     
     <!-- JavaScript -->
 

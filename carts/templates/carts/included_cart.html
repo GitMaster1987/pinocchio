@@ -1,5 +1,6 @@
 {% load static %}
 
+
 <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
@@ -12,44 +13,53 @@
             </div>
 
             <!-- Тело модального окна корзины-->
-            <div class="modal-body">
-                <div id="cartItems">
-                    <!-- Перечень товаров -->
-                    <div class="cart-item d-flex align-items-center">
-                        <img src="{% static 'img/pizza/shirmp-pizza.png' %}" alt="Товар" class="cart-item-img me-3">
-                        <div class="flex-grow-1">
-                            <h5 class="mb-1">Название товара</h5>
-                            <p class="mb-1">Цена: <span class="item-price" data-price="1500">1500</span> ₽</p>
-                            <div class="small text-muted">Категория: Электроника</div>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <button class="btn btn-outline-secondary btn-sm me-2 znak-products" onclick="updateQuantity(this, -1)">
-                                <i class="fa-solid fa-minus"></i>
+            {% for cart in carts %}
+                <div class="modal-body">
+                    <div id="cartItems">
+                        <!-- Перечень товаров -->
+                        <div class="cart-item d-flex align-items-center">
+                            <img src="{{ cart.product.image.url }}" alt="Товар" class="cart-item-img me-3">
+                            <div class="flex-grow-1">
+                                <h5 class="mb-1">{{cart.product.name}}</h5>
+                            <p class="mb-1">
+                                Цена за единицу: <span class="item-price" 
+                                                       data-price="{{ cart.product.sell_price }}">
+                                                       {{ cart.product.sell_price | floatformat:2 }}
+                                                </span> ₽
+                            </p>
+                            <p class="mb-1">
+                                Общая цена: <span class="item-total-price">{{ cart.products_price | floatformat:2 }}</span> ₽
+                            </p>                                
+                            <div class="small text-muted">Категория: {{cart.product.category.title}}</div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <button class="btn btn-outline-secondary btn-sm me-2 znak-products" onclick="updateQuantity(this, -1)">
+                                    <i class="fa-solid fa-minus"></i>
+                                </button>
+                                <input type="text" value="{{cart.quantity}}" min="1" 
+                                    class="form-control form-control-sm text-center" 
+                                    style="width: 60px;" 
+                                    readonly>
+                                <button class="btn btn-outline-secondary btn-sm ms-2 znak-products" onclick="updateQuantity(this, 1)">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                            {# Кнопка удаления из корзины #}
+                            <button class="btn btn-danger btn-sm ms-3 cart-delete" onclick="removeItem(this)">
+                                <a href="{% url "cart:cart_remove" 1 %}" class="col_cart_del">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a> 
                             </button>
-                            <input type="text" value="1" min="1" 
-                                   class="form-control form-control-sm text-center" 
-                                   style="width: 60px;" 
-                                   readonly>
-                            <button class="btn btn-outline-secondary btn-sm ms-2 znak-products" onclick="updateQuantity(this, 1)">
-                                <i class="fa-solid fa-plus"></i>
-                            </button>
                         </div>
-                        {# Кнопка удаления из корзины #}
-                        <button class="btn btn-danger btn-sm ms-3 cart-delete" onclick="removeItem(this)">
-                            <a href="{% url "cart:cart_remove" 1 %}" class="col_cart_del">
-                                <i class="fa-solid fa-trash"></i>
-                            </a> 
-                        </button>
                     </div>
                 </div>
-            </div>
-
+            {% endfor %}
             <!-- Нижняя часть модального окна -->
             <div class="modal-footer flex-column align-items-start">
                 <!-- Общая информация всегда отображается -->
                 <div class="w-100 mb-3">
-                    <p class="mb-1">Общее количество: <span id="totalQuantity">1</span></p>
-                    <p class="cart-total">Общая цена: <span id="totalPrice">1500</span> ₽</p>
+                    <p class="mb-1">Общее количество: <span id="totalQuantity">{{carts.total_quantity}}</span></p>
+                    <p class="cart-total">Общая цена: <span id="totalPrice">{{carts.total_price}}</span> ₽</p>
                 </div>
                 
                 {% if user.is_authenticated %}

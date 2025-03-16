@@ -133,7 +133,8 @@
 .modal-body {
   color: rgb(2, 25, 38);
   background: rgba(155, 182, 246, 0.673);
-  
+  padding-top: 10px;
+  padding-bottom: 0;
 }
 
 .input-color {

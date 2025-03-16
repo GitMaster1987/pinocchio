@@ -1,0 +1,60 @@
+{% load static %}
+{% load carts_tags %}
+
+{% user_carts request as carts %}
+   
+    <!-- BEGIN navigation -->
+    <div class="navigation">
+        <div class="navbar-container" data-spy="affix" data-offset-top="400">
+            <div class="container">
+                <div class="navbar_top">
+                    <div class="top_addr">
+                        <nav class="navbar">
+                            <div id="navbar_content">
+                                <!-- Brand and toggle get grouped for better mobile display -->
+                                <div class="navbar-header">                                            
+                                    <a class="navbar-brand" href="#">
+                                        <img src="{% static "img/logo3.png" %}" alt="logo">
+                                    </a>                                            
+                                </div>
+                                <a href="#cd-nav" class="cd-nav-trigger right_menu_icon">
+                                    <span><i class="icon-menu"></i></span>
+                                </a>
+                                
+                                <!-- Collect the nav links, forms, and other content for toggling -->
+                                {% include "main/nav/header_menu.html" %}
+                                <!-- /.navbar-collapse -->
+                            </div>
+                        </nav>
+                        <div class="pull-right search-block d-none d-md-none d-lg-block">
+                            <!-- Корзина -->
+                            <button type="button" 
+                                    class="btn btn-outline-warning btn-sm" 
+                                    title="Корзина"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#cartModal">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                                {% if  carts.total_quantity %}
+                                    <cart-text class="cart-number">{{carts.total_quantity}}</cart-text>
+                                {% else %}
+                                    <cart-text class="cart-number">0</cart-text>
+                                {% endif %}
+                            </button>
+                            <!-- Корзина END -->
+                        </div>
+                    </div>
+                    {% if user.is_authenticated %}
+                        <span class="login-out"><user-text>Вы вошли как:</user-text> <b>{{user.username}}</b></span>
+                    {% endif %}
+                </div>
+                <!-- /.navbar_top -->
+            </div>
+        </div>
+        <!-- /.navbar-container -->
+    </div>
+    <!-- END navigation -->
+
+<!-- End hero -->
+ <!-- Модальное окно для корзины товаров -->
+    {% include "carts/included_cart.html" %}
+<!-- Закончилось Модальное окно для корзины товаров -->
