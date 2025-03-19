@@ -1,4 +1,5 @@
 <div class="modal-content" id="cart-items-container">
+    
     <!-- Заголовок модального окна корзины -->
     <div class="modal-header">
         <h5 class="modal-title" >
@@ -6,6 +7,7 @@
         </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="position: absolute; right: 1rem; top: 1rem;"></button>
     </div>
+   
     {# Если корзина пустая #}
     {% if not carts %}
         <div class="cart-item d-flex align-items-center" style="padding: 15px; margin: 15px;">
@@ -16,12 +18,10 @@
             
         </div>
     {% endif %}
-
     <!-- Тело модального окна корзины-->
     {% for cart in carts %}
         <div class="modal-body">
-            <div id="cartItems">
-                
+            <div id="cartItems">                
                 <!-- Перечень товаров -->
                 <div class="cart-item d-flex align-items-center">
                     <img src="{{ cart.product.image.url }}" alt="Товар" class="cart-item-img me-3">
@@ -42,7 +42,7 @@
                         <button class="btn btn-outline-secondary btn-sm me-2 znak-products" onclick="updateQuantity(this, -1)">
                             <i class="fa-solid fa-minus"></i>
                         </button>
-                        <input type="text" value="{{cart.quantity}}" min="1" 
+                        <input type="text" value="{{cart.quantity}}" min="1"
                             class="form-control form-control-sm text-center" 
                             style="width: 60px;" 
                             readonly>
@@ -51,11 +51,12 @@
                         </button>
                     </div>
                     {# Кнопка удаления из корзины #}
-                    <button class="btn btn-danger btn-sm ms-3 cart-delete" onclick="removeItem(this)">
-                        <a href="{% url "cart:cart_remove" %}" class="col_cart_del">
-                            <i class="fa-solid fa-trash"></i>
-                        </a> 
-                    </button>
+                    <a class="btn btn-danger btn-sm ms-3 cart-delete col_cart_del" 
+                       data-cart-id="{{ cart.id }}"
+                       href="{% url "cart:cart_remove" %}">
+                        {% csrf_token %}
+                        <i class="fa-solid fa-trash"></i>                         
+                    </a>
                 </div>
             </div>
         </div>
