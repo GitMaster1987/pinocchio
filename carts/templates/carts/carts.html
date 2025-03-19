@@ -38,15 +38,22 @@
                         </p>                                
                     <div class="small text-muted">Категория: {{cart.product.category.title}}</div>
                     </div>
+                    {# Изменения кол-ва товара в крозине #}
                     <div class="d-flex align-items-center">
-                        <button class="btn btn-outline-secondary btn-sm me-2 znak-products" onclick="updateQuantity(this, -1)">
+                        <button class="btn btn-outline-secondary btn-sm me-2 znak-products decrement" 
+                                data-cart-id="{{ cart.id }}"
+                                data-cart-change-url="{% url "cart:cart_change" %}">
+                                {% csrf_token %}           
                             <i class="fa-solid fa-minus"></i>
                         </button>
                         <input type="text" value="{{cart.quantity}}" min="1"
-                            class="form-control form-control-sm text-center" 
+                            class="form-control form-control-sm text-center fw-bold fs-6 number" 
                             style="width: 60px;" 
                             readonly>
-                        <button class="btn btn-outline-secondary btn-sm ms-2 znak-products" onclick="updateQuantity(this, 1)">
+                        <button class="btn btn-outline-secondary btn-sm ms-2 znak-products increment" 
+                                data-cart-id="{{ cart.id }}"
+                                data-cart-change-url="{% url "cart:cart_change" %}">
+                               {% csrf_token %}
                             <i class="fa-solid fa-plus"></i>
                         </button>
                     </div>
