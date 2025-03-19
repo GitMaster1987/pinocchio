@@ -35,9 +35,9 @@
                                     data-bs-target="#cartModal">
                                 <i class="fa-solid fa-cart-shopping"></i>
                                 {% if  carts.total_quantity %}
-                                    <cart-text class="cart-number">{{carts.total_quantity}}</cart-text>
+                                    <cart-text class="cart-number" id="in-cart-count">{{carts.total_quantity}}</cart-text>
                                 {% else %}
-                                    <cart-text class="cart-number">0</cart-text>
+                                    <cart-text class="cart-number" id="in-cart-count">0</cart-text>
                                 {% endif %}
                             </button>
                             <!-- Корзина END -->

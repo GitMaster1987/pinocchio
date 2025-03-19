@@ -42,6 +42,9 @@
     <!-- My CSS File   -->
     <link rel="stylesheet" type="text/css" href="{% static "css/my.min.css" %}">
 
+    <!-- Sweetalert2 CSS File  -->
+    <link rel="stylesheet" type="text/css" href="{% static "sweetalert2/sweetalert2.min.css" %}">
+
 		
     <!--[if lt IE 9]>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -75,7 +78,7 @@
         <!-- END carousel -->
         </section>
         <!-- Begin hero-->
-        {% block main_section %}{% endblock %}
+        {% block main_section %} {% endblock %}
         <!-- Special Menu Slider Start -->
         {% block  Special %} {% endblock %}
         <!-- Special Menu Slider End -->
@@ -84,7 +87,7 @@
         {% include "main/about.html" %}
 
         <!--    Menus   -->
-        {% block Menus %}{% endblock %}
+        {% block Menus %} {% endblock %}
 
         <!--    Chef    -->
         {% block Chefs %} {% endblock %}
@@ -145,6 +148,8 @@
     <script src="{% static "js/main.min.js" %}"></script>
     <script src="{% static "js/bootstrap.bundle.min.js" %}"></script>
 
+    <!-- Custom Sweetalert2 js File -->
+    <script src="{% static "sweetalert2/sweetalert2.min.js" %}"></script>
     <!-- Custom carts js -->
     <script src="{% static "js/carts.min.js" %}"></script>    
 

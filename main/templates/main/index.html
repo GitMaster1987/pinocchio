@@ -119,10 +119,13 @@
                                     </div>                                    
                                 </div>
                                 <a type="button"
-                                   href="{% url "cart:cart_add" product.pk %}" 
-                                   class="btn btn-primary btn-sm button_cart_add">
-                                   <i class="fa-solid fa-cart-plus"></i> 
-                                   В корзину
+                                    href="{% url "cart:cart_add" %}" 
+                                    class="btn btn-primary btn-sm button_cart_add add-to-cart"
+                                    data-product-id="{{ product.id }}"
+                                    >
+                                    {% csrf_token %}
+                                    <i class="fa-solid fa-cart-plus"></i> 
+                                    В корзину
                                 </a>
                             </div>
                             {% endif %}
@@ -203,7 +206,12 @@
                                             <sup>₽</sup>{{product.sell_price|floatformat:2}}
                                         </span>
                                     {% endif %}                                    
-                                    <a href="{% url "cart:cart_add" product.pk %}" class="menu-slider-item-btn">В корзину</a>
+                                    <a href="{% url "cart:cart_add" %}" 
+                                       class="menu-slider-item-btn add-to-cart" 
+                                       data-product-id="{{ product.id }}">
+                                       {% csrf_token %}
+                                       В корзину
+                                    </a>
                                 </div>
                             </div>
                         </div>
