@@ -203,7 +203,7 @@
                                             <sup>₽</sup>{{product.sell_price|floatformat:2}}
                                         </span>
                                     {% endif %}                                    
-                                    <a href="#" class="menu-slider-item-btn">В корзину</a>
+                                    <a href="{% url "cart:cart_add" product.pk %}" class="menu-slider-item-btn">В корзину</a>
                                 </div>
                             </div>
                         </div>
