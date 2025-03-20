@@ -109,29 +109,7 @@
 
 
     <!-- START mobile right burger menu -->
-    <nav class="cd-nav-container right_menu" id="cd-nav">
-        <div class="header__open_menu">
-            <a href="index.html" class="rmenu_logo" title="logo">
-                <img src="{% static "img/logo3.png" %}" alt="logo">
-            </a>
-        </div>
-        <div class="right_menu_search">
-            <form method="post">
-                <input type="text" name="q" autocomplete="off" class="form-control search_input" value=""
-                    placeholder="Search anything">
-                <button type="submit" class="search_icon">
-                    <i class="icon-search"></i>
-                </button>				
-            </form>
-        </div>
-        {% comment %} === Mobile MENU === {% endcomment %}
-        {% include "main/nav/mobile_menu.html" %}
-        <div class="right_menu_addr top_addr">
-            <span><i class="icon-map-pin"></i> Your country, your city, 12345</span>
-            <span><i class="icon-phone-call"></i> 123 456 789</span>
-            <span><i class="icon-mail"></i> info@gmail.com</span>
-        </div>
-    </nav>
+    {% include "includes/mobile_section.html" %}
 
     <div class="cd-overlay"></div>
     <!-- /.cd-overlay -->   

@@ -5,6 +5,7 @@ import math
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from PIL import Image
+from django.utils.html import format_html
 
 
 def validate_image_dimensions(image):
@@ -55,7 +56,7 @@ class Banner(models.Model):
     height = models.IntegerField(default=350, verbose_name="Высота")
     created_at = models.DateTimeField(verbose_name="Дата записи", default=timezone.now)
     update_at = models.DateTimeField(
-        verbose_name="Дата обновления", blank=False, null=False
+        auto_now_add=True, verbose_name="Дата обновления", blank=False, null=False
     )
 
     class Meta:
@@ -122,6 +123,13 @@ class Products(models.Model):
             + " - Категория: "
             + self.category.title
         )
+    
+    def image_tag(self):
+        if self.image:
+            return format_html('<img src="{}" style="width: 50px; height: auto;" />', self.image.url)
+        return "Нет изображения"
+    
+    image_tag.short_description = "Миниатюра"
 
     # Cчитаем цену со скидкой
     def sell_price(self):

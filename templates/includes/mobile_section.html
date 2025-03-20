@@ -1,0 +1,55 @@
+{% load static %}
+
+<nav class="cd-nav-container right_menu" id="cd-nav">
+    <div class="header__open_menu">
+        <a href="index.html" class="rmenu_logo" title="logo">
+            <img src="{% static "img/logo3.png" %}" alt="logo">
+        </a>
+    </div>
+    {# Блок работы с пользователем #}
+    <div class="right_menu_search">
+        {% if user.is_authenticated %}
+            <div class="d-flex align-items-center">
+                <span>Вы вошли как: <b><b>{{user.username}}</b></b></span>    
+            </div>
+            <div class="d-grid gap-2" style="margin-top: 15px;">
+                <a class="btn btn-outline-success" href="{% url "user:logout" %}" class="user-out-login" id="user-logout" style"color:red">
+                    Выйти &nbsp;<i class="fa-solid fa-right-from-bracket"></i>                    
+                </a>
+            </div>
+        {% else %}
+            <div class="d-flex justify-content-center align-items-center">
+                <a href="{% url "user:login" %}" class="btn btn-link text-decoration-none">Авторизация</a>
+                <a href="{% url "user:register" %}" class="btn btn-link text-decoration-none ms-3">Регистрация</a>
+            </div>
+        {% endif %}            
+    </div>
+
+    {# Корзина пользователя #}
+    <div class="right_menu_search">
+        <div class="d-flex justify-content-start-0 align-items-center">
+            <!-- Корзина -->
+            <strong>Ваша корзина :</strong>&nbsp;&nbsp;
+            <div class="d-flex justify-content-end align-items-center">
+                <button type="button" 
+                        class="btn btn-outline-success btn-sm" 
+                        title="Корзина"
+                        data-bs-toggle="modal"
+                        data-bs-target="#cartModal">
+                    <i class="fa-solid fa-cart-shopping"></i>                    
+                        <cart-text class="cart-number" id="in-cart-count"></cart-text>                    
+                </button>
+            </div>
+            <!-- Корзина END -->
+        </div>           
+    </div>
+    
+    {% comment %} === Mobile MENU === {% endcomment %}
+    {% include "main/nav/mobile_menu.html" %}
+    <div class="right_menu_addr top_addr">
+        <span><i class="icon-map-pin"></i> г. Донецк, ул. Пухова, 31-А</span>
+        <span><i class="icon-phone-call"></i> +7(949) 333-55-51</span>
+        <span><i class="icon-phone-call"></i> +7(949) 333-55-52</span>
+        <span><i class="icon-mail"></i> pinocchio@example.com</span>
+    </div>
+</nav>

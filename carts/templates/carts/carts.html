@@ -101,12 +101,12 @@
         {% else %}
         <!-- Блок для авторизации или регистрации -->
         <div id="authNotice" class="w-100 text-center mb-3">
-            <p>Оформление заказа доступно только <strong>авторизованным</strong> пользователям.</p>
+            <p class="fs-5">Оформление заказа доступно только <strong>авторизованным</strong> пользователям.</p>
             <a href="{% url "user:login" %}" class="btn btn-link">
-                <i class="fa-regular fa-user"></i> Войти
+                <i class="fa-regular fa-user me-2"></i>Войти
             </a>
             <a href="{% url "user:register" %}" class="btn btn-link">
-                <i class="fa-solid fa-registered"></i> Регистрация
+                <i class="fa-solid fa-registered me-2"></i>Регистрация
             </a>
         </div>
         {% endif %}
