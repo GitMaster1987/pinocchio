@@ -12,4 +12,5 @@ disable = missing-function-docstring,
         unused-import,
         invalid-name,
         duplicate-key,
-        no-name-in-module
+        no-name-in-module,
+        wrong-import-order

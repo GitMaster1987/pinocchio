@@ -83,19 +83,11 @@ def register(request):
 # Выход
 @login_required
 def logout(request):
-    session_key = request.session.session_key
-    if not session_key:
-        request.session.create()
-    if session_key:
-        # Обновляем все записи корзины с текущим session_key
-        Cart.objects.filter(session_key=session_key).update(user=request.user)
     auth.logout(request)    
     return redirect(reverse("main:index"))
 
 
 # Сброс пароля пользователя
-
-
 def password_reset_request(request):
     if request.method == "POST":
         form = PasswordResetRequestForm(request.POST)

@@ -10,12 +10,10 @@
    
     {# Если корзина пустая #}
     {% if not carts %}
-        <div class="cart-item d-flex align-items-center" style="padding: 15px; margin: 15px;">
-           
+        <div class="cart-item d-flex align-items-center" style="padding: 15px; margin: 15px;">           
             <div class="flex-grow-1 text-center" style="font-weight: 700; font-size: larger;" > 
                 Ваша корзина пуста.<br>Пожалуйста добавьте товары в корзину
-            </div>
-            
+            </div>            
         </div>
     {% endif %}
     <!-- Тело модального окна корзины-->
@@ -72,54 +70,111 @@
     <div class="modal-footer flex-column align-items-start">
         <!-- Общая информация всегда отображается -->
         <div class="w-100 mb-3">
-            <p class="mb-1">Общее количество: <span id="totalQuantity">{{carts.total_quantity}}</span></p>
-            <p class="cart-total">Общая цена: <span id="totalPrice">{{carts.total_price | floatformat:2}}</span> ₽</p>
+            <p class="mb-1 fs-5">Общее количество: <span id="totalQuantity">{{carts.total_quantity}}</span></p>
+            <p class="cart-total fs-5">Общая цена: <span id="totalPrice">{{carts.total_price | floatformat:2}}</span> ₽</p>
         </div>
-        
+        <hr class="hr" />
+        {# Если пользователь авторизирован #}
         {% if user.is_authenticated %}
         <!-- Радиокнопки для выбора способа оплаты -->
             {% if carts %}
-                {# Доступны только если в корзине есть товары #}
-                <div class="w-100 mb-3">
-                    <p>Выберите способ оплаты:</p>
-                    <form class="d-flex flex-column">
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="radio" name="paymentMethod" id="paymentCash" value="cash">
-                            <label class="form-check-label" for="paymentCash">
-                                💵 Наличными/Картой при получении
-                            </label>
+                {# Форма оформления заказа #}
+                <form>
+                    {# Доступны только если в корзине есть товары #}
+                    <div class="w-100 mb-3">
+                        {# >>> Данные пользователя <<< #}
+                        <input type="text" 
+                               class="form-control d-none" 
+                               id="id_username" 
+                               name="username"
+                               readonly 
+                               value="{{user.username}}">
+                        <label for="id_username" class="d-none">Имя пользователя</label>
+                        <div class="row g-2">
+                            <div class="col-md">
+                                <div class="form-floating">
+                                    <input type="text" 
+                                           class="form-control" 
+                                           id="id_first_name" 
+                                           name="first_name"
+                                           readonly 
+                                           value="{{user.first_name}}">
+                                    <label for="id_first_name">Ваше имя</label>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating">
+                                    <input type="text"
+                                           class="form-control" 
+                                           id="id_last_name" 
+                                           name="last_name"
+                                           readonly 
+                                           value="{{user.last_name}}">
+                                    <label for="id_last_name">Ваша фамилия</label>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating">
+                                    <input type="phone" 
+                                           class="form-control" 
+                                           id="id_phone_number"
+                                           name="phone_number" 
+                                           readonly 
+                                           value="{{user.phone_number}}">
+                                    <label for="id_phone_number">Ваш телефон</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="paymentMethod" id="paymentCard" value="card">
-                            <label class="form-check-label" for="paymentCard">
-                                💳 Оплатить картой
-                            </label>
-                        </div>
-                    </form>
-                </div>
+                        {# Выбор способа оплаты #}
+                        <br>
+                        <div class="row g-2">
+                            <span>Выберите способ оплаты:</span>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" 
+                                    type="radio" 
+                                    name="paymentMethod" 
+                                    id="paymentCash" 
+                                    value="cash">
+                                <label class="form-check-label" for="paymentCash">
+                                    💵 Наличными/Картой при получении
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input"
+                                    type="radio" 
+                                    name="paymentMethod" 
+                                    id="paymentCard" 
+                                    value="card">
+                                <label class="form-check-label" for="paymentCard">
+                                    💳 Оплатить картой онлайн
+                                </label>
+                            </div>
+                        </div>                    
+                    </div>
             {% endif %}
         {% else %}
-        <!-- Блок для авторизации или регистрации -->
-        <div id="authNotice" class="w-100 text-center mb-3">
-            <p class="fs-5">Оформление заказа доступно только <strong>авторизованным</strong> пользователям.</p>
-            <a href="{% url "user:login" %}" class="btn btn-link">
-                <i class="fa-regular fa-user me-2"></i>Войти
-            </a>
-            <a href="{% url "user:register" %}" class="btn btn-link">
-                <i class="fa-solid fa-registered me-2"></i>Регистрация
-            </a>
-        </div>
+                <!-- Блок для авторизации или регистрации -->
+                <div id="authNotice" class="w-100 text-center mb-3">
+                    <p class="fs-5">Оформление заказа доступно только <strong>авторизованным</strong> пользователям.</p>
+                    <a href="{% url "user:login" %}" class="btn btn-link">
+                        <i class="fa-regular fa-user me-2"></i>Войти
+                    </a>
+                    <a href="{% url "user:register" %}" class="btn btn-link">
+                        <i class="fa-solid fa-registered me-2"></i>Регистрация
+                    </a>
+                </div>
         {% endif %}
-        <hr class="hr" />
-        <!-- Кнопки "Оформить заказ" и "Закрыть" -->
-        <div class="d-flex justify-content-between w-100">
-            {% if user.is_authenticated %}
-                {% if carts %}
-                    <hr>
-                    <button type="button" class="btn btn-success" id="checkoutButton" onclick="placeOrder()">Оформить заказ</button>
-                {% endif %}                        
-            {% endif %}
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-        </div>
+                    <hr class="hr" />
+                    <!-- Кнопки "Оформить заказ" и "Закрыть" -->
+                    {% if user.is_authenticated %}
+                    <div class="d-flex justify-content-between w-100">                        
+                        {% if carts %}
+                            <hr>
+                            <button type="button" class="btn btn-success" id="checkoutButton">Оформить заказ</button>
+                        {% endif %}                        
+                    {% endif %}
+                </form>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    </div>
     </div>
 </div>
