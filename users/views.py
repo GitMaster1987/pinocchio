@@ -16,7 +16,6 @@ from django.utils.crypto import get_random_string
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
-from django.contrib.auth.tokens import default_token_generator
 
 
 # Авторизация пользователя
