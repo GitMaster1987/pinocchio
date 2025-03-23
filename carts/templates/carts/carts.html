@@ -79,8 +79,9 @@
         <!-- Радиокнопки для выбора способа оплаты -->
             {% if carts %}
                 {# Форма оформления заказа #}
-                <form action="{% url "orders:create_order" %}" method="post" id="formCreateOrder">
+                <form method="post" id="formCreateOrder">
                     {% csrf_token %}
+                    <a class="d-none" href="{% url "orders:create_order" %}" id="formCreateOrderHref"></a>
                     {# Доступны только если в корзине есть товары #}
                     <div class="w-100 mb-3">
                         {# >>> Данные пользователя <<< #}
@@ -89,7 +90,7 @@
                             id="id_username" 
                             name="username"
                             readonly 
-                            value="{{user.username}}" required>
+                            value="{{user.username}}">
                         <label for="id_username" class="d-none">Имя пользователя</label>
                         <div class="row g-2">
                             <div class="col-md">
@@ -99,7 +100,7 @@
                                         id="id_first_name" 
                                         name="first_name"
                                         readonly 
-                                        value="{{user.first_name}}" required>
+                                        value="{{user.first_name}}">
                                     <label for="id_first_name">Ваше имя</label>
                                 </div>
                             </div>
@@ -110,7 +111,7 @@
                                         id="id_last_name" 
                                         name="last_name"
                                         readonly 
-                                        value="{{user.last_name}}" required>
+                                        value="{{user.last_name}}">
                                     <label for="id_last_name">Ваша фамилия</label>
                                 </div>
                             </div>
@@ -121,7 +122,7 @@
                                         id="id_phone_number"
                                         name="phone_number" 
                                         readonly 
-                                        value="{{user.phone_number}}" required>
+                                        value="{{user.phone_number}}">
                                     <label for="id_phone_number">Ваш телефон</label>
                                 </div>
                             </div>
@@ -172,7 +173,7 @@
                     <div class="d-flex justify-content-between w-100">                        
                         {% if carts %}
                             <hr>
-                            <button type="submit" class="btn btn-success" id="checkoutButtonOrder">Оформить заказ</button>
+                            <button type="button" class="btn btn-success" id="checkoutButtonOrder">Оформить заказ</button>
                 </form>
                         {% endif %}                                        
                      {% endif %}
