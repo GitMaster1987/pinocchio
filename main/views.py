@@ -5,7 +5,7 @@ from main.models import Banner, Categories, Products, Chefs
 def index(request):
     banner = Banner.objects.all()
     categories = Categories.objects.all()
-    products = Products.objects.all()
+    products = Products.objects.filter(show=True).order_by("price")
     chefs = Chefs.objects.all()
     context = {
         "title": "Пиноккио - Пицца, которая не оставит вас равнодушным",

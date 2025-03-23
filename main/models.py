@@ -103,6 +103,7 @@ class Products(models.Model):
     discount = models.DecimalField(
         default=0.00, max_digits=7, decimal_places=2, verbose_name="Скидка в %"
     )
+    show = models.BooleanField(default=True, verbose_name="Отображение")
     category = models.ForeignKey(
         to=Categories, on_delete=models.PROTECT, verbose_name="Категория"
     )

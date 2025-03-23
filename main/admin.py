@@ -33,6 +33,7 @@ class ProductsModelAdmin(admin.ModelAdmin):
         "name",
         "price",
         "discount",
+        "show",
         "category_title",
     ]
     readonly_fields = ("image_tag",)

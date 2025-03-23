@@ -18,7 +18,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from django.conf.urls.static import static
-from django.contrib.auth import views
 from __pinocchio import settings
 
 urlpatterns = [
@@ -29,6 +28,8 @@ urlpatterns = [
     path("user/", include("users.urls", namespace="user")),
     # ''' Carts '''
     path("cart/", include("carts.urls", namespace="cart")),
+    # ''' Orers '''
+    path("orders/", include("orders.urls", namespace="orders")),
 ]
 
 if settings.DEBUG:
