@@ -8,8 +8,9 @@ from carts.models import Cart
 from carts.utils import get_user_carts
 from orders.forms import CreateOrderForm
 from orders.models import Order, OrderItem
+from django.contrib.auth.decorators import login_required
 
-
+@login_required
 def create_order(request):
     if request.method == "POST":
         form = CreateOrderForm(data=request.POST)
@@ -48,15 +49,21 @@ def create_order(request):
                             "carts/carts.html", {"carts": user_cart}, request=request
                         )
 
-                        return JsonResponse({
-                            "message": "Заказ оформлен!",
-                            "cart_items_html": cart_items_html,
-                        }, json_dumps_params={"ensure_ascii": False})
+                        return JsonResponse(
+                            {
+                                "message": "Заказ оформлен!",
+                                "cart_items_html": cart_items_html,
+                            },
+                            json_dumps_params={"ensure_ascii": False},
+                        )
             except ValidationError as e:
                 return JsonResponse({"message": str(e)}, status=400)
-        return JsonResponse({
-            "message": "Некорректные данные",
-            "errors": form.errors,
-        }, status=400)
+        return JsonResponse(
+            {
+                "message": "Некорректные данные",
+                "errors": form.errors,
+            },
+            status=400,
+        )
     else:
         raise Http404("Страница не найдена")

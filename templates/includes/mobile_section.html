@@ -1,4 +1,5 @@
 {% load static %}
+{% load carts_tags %}
 
 <nav class="cd-nav-container right_menu" id="cd-nav">
     <div class="header__open_menu">
@@ -26,6 +27,7 @@
     </div>
 
     {# Корзина пользователя #}
+    {% user_carts request as carts %}
     <div class="right_menu_search">
         <div class="d-flex justify-content-start-0 align-items-center">
             <!-- Корзина -->
@@ -36,8 +38,12 @@
                         title="Корзина"
                         data-bs-toggle="modal"
                         data-bs-target="#cartModal">
-                    <i class="fa-solid fa-cart-shopping"></i>                    
-                        <cart-text class="cart-number" id="in-cart-count"></cart-text>                    
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    {% if  carts.total_quantity %}
+                        <cart-text class="cart-number" id="mobi-in-cart-count">{{carts.total_quantity}}</cart-text>
+                    {% else %}
+                        <cart-text class="cart-number" id="mobi-in-cart-count">0</cart-text>
+                    {% endif %}                   
                 </button>
             </div>
             <!-- Корзина END -->
