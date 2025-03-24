@@ -30,6 +30,8 @@ urlpatterns = [
     path("cart/", include("carts.urls", namespace="cart")),
     # ''' Orers '''
     path("orders/", include("orders.urls", namespace="orders")),
+    # ''' Manager '''
+    path("manager/", include("manager.urls", namespace="manager")),
 ]
 
 if settings.DEBUG:
