@@ -8,12 +8,56 @@ $.validator.addMethod("strongPassword", function(value, element) {
     return this.optional(element) || /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(value);
 }, "Пароль должен содержать минимум 8 символов, одну заглавную букву, одну строчную букву, одну цифру и один специальный символ.");
 
+// Метод для проверки уникальности поля USERNAME
+$.validator.addMethod("usernameUnique", function(value, element) {
+    let isUnique = false;
+    $.ajax({
+        url: "/user/check_username/", // URL для проверки на сервере
+        type: "POST",
+        async: false, // Синхронный запрос для корректной работы валидации
+        data: {
+            username: value,
+            csrfmiddlewaretoken: $("[name=csrfmiddlewaretoken]").val(),
+        },
+        success: function(response) {
+            isUnique = response.is_unique; // Сервер возвращает true, если username уникален
+        },
+        error: function() {
+            isUnique = false; // В случае ошибки считаем, что username не уникален
+        }
+    });
+    return isUnique;
+}, "Этот логин уже зарегистрирован. Пожалуйста, выберите другой.");
+
+// Метод для проверки уникальности Email адреса
+$.validator.addMethod("emailUnique", function(value, element) {
+    let isUnique = false;
+    $.ajax({
+        url: "/user/check_email/", // URL для проверки на сервере
+        type: "POST",
+        async: false, // Синхронный запрос (нужно для валидации)
+        data: {
+            email: value,
+            csrfmiddlewaretoken: $("[name=csrfmiddlewaretoken]").val(),
+        },
+        success: function(response) {
+            isUnique = response.is_unique; // Сервер вернёт, уникален ли email
+        },
+        error: function() {
+            isUnique = false; // В случае ошибки считаем, что email не уникален
+        }
+    });
+    return isUnique;
+}, "Этот email уже зарегистрирован. Пожалуйста, выберите другой.");
+
+
 $(document).ready(function () {
     $("#registrationForm").validate({
         rules: {
             username: {
                 required: true,
-                maxlength: 35
+                maxlength: 35,
+                usernameUnique: true // Использование нового пользовательского валидатора
             },
             first_name: {
                 required: true,
@@ -25,7 +69,8 @@ $(document).ready(function () {
             },
             email: {
                 required: true,
-                email: true
+                email: true,
+                emailUnique: true // Использование пользовательского валидатора
             },
             phone_number: {
                 required: true,
@@ -45,7 +90,8 @@ $(document).ready(function () {
         messages: {
             username: {
                 required: "Пожалуйста, введите логин",
-                maxlength: "Логин не может превышать 35 символов"
+                maxlength: "Логин не может превышать 35 символов",
+                usernameUnique: "Этот логин уже зарегистрирован. Пожалуйста, выберите другой"
             },
             first_name: {
                 required: "Пожалуйста, введите Имя",
@@ -57,7 +103,8 @@ $(document).ready(function () {
             },
             email: {
                 required: "Пожалуйста, введите email",
-                email: "Пожалуйста, введите правильный email адрес"
+                email: "Пожалуйста, введите правильный email адрес",
+                emailUnique: "Этот email уже зарегистрирован. Пожалуйста, выберите другой"
             },
             phone_number: {
                 required: "Пожалуйста, введите номер телефона",
