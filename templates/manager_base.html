@@ -1,0 +1,102 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+        <title>Xacton - Admin & Dashboard Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="MyraStudio" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="assets/images/favicon.ico">
+
+        <!-- App css -->
+        <link href="{% static "manager/css/bootstrap.min.css" %}" rel="stylesheet" type="text/css" />
+        <link href="{% static "manager/css/icons.min.css" %}" rel="stylesheet" type="text/css" />
+        <link href="{% static "manager/css/theme.min.css" %}" rel="stylesheet" type="text/css" />
+
+    </head>
+
+    <body>
+
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+
+            <div class="main-content">
+
+                {# Загружен блок HEADER #}
+                {% include "manager/includes/header.html" %}
+                {# Загружен блок навигации #}
+                {% include "manager/includes/nav.html" %}                
+
+                <!-- Контент на странице - Begin -->
+                <div class="page-content">
+                    <div class="container-fluid">
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="mb-0 font-size-18">
+                                        {% block header-title %}{% endblock %}
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>     
+                        <!-- end page title -->
+                        <!--*** Контент на странице Begin ***-->
+                        {% block content %}{% endblock %}
+                        <!--*** Контент на странице Begin END ***-->
+                                          
+                    </div> <!-- container-fluid -->
+                </div>
+                <!-- Контент на странице - END -->
+
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="text-center text-lg-left">
+                                    2025 © Manager's panel.
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="text-right d-none d-lg-block">
+                                    Дипломный проект - ЦПОИС-23п
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+
+            </div>
+            <!-- end main content-->
+
+        </div>
+        <!-- END layout-wrapper -->
+
+
+        <!-- jQuery  -->
+        <script src="{% static "manager/js/jquery.min.js" %}"></script>
+        <script src="{% static "manager/js/bootstrap.bundle.min.js" %}"></script>
+        <script src="{% static "manager/js/waves.js" %}"></script>
+        <script src="{% static "manager/js/simplebar.min.js" %}"></script>
+
+         <!-- Morris Js-->
+        <script src="{% static "manager/plugins/morris-js/morris.min.js" %}"></script>
+        <!-- Raphael Js-->
+        <script src="{% static "manager/plugins/raphael/raphael.min.js" %}"></script>
+
+        <!-- Morris Custom Js-->
+        <script src="{% static "manager/pages/dashboard-demo.js" %}"></script>
+
+
+        <!-- App js -->
+        <script src="{% static "manager/js/theme.js" %}"></script>
+
+    </body>
+
+</html>

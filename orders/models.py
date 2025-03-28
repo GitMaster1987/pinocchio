@@ -1,7 +1,7 @@
+from django.core.validators import RegexValidator
 from django.db import models
 from main.models import Products
 from users.models import User
-from django.core.validators import RegexValidator
 
 
 class OrderitemQuerySet(models.QuerySet):
