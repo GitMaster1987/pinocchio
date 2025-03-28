@@ -1,7 +1,7 @@
 # pinocchio
 ##### Миграции:
 Создание миграции:
--- python manage.py makemigrations <br>
+-- python manage.py makemigrations  
 Применение миграции:
 -- python manage.py migrate
 
