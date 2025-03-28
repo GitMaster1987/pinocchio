@@ -52,6 +52,12 @@ class Order(models.Model):
         max_length=50, default="В обработке", verbose_name="Статус заказа"
     )
 
+    def total_price(self):
+        # Суммируем стоимость всех товаров, связанных с заказом
+        return sum(
+            item.price * item.quantity for item in self.orderitem_set.all()
+        )
+
     class Meta:
         db_table = "order"
         verbose_name = "Заказ"

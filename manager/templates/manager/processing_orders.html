@@ -9,4 +9,56 @@
 
 {# Контент на странице #}
 {% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Список новых заказов</h4>
+
+                <table id="new-orders-datatable" class="table dt-responsive nowrap">
+                    <thead>
+                        <tr>
+                            <th>№ Заказа</th>
+                            <th>Имя</th>
+                            <th>Фамилия</th>
+                            <th>Email</th>
+                            <th>Телефон</th>
+                            <th>Дата заказа</th>
+                            <th>Сумма</th>
+                            <th>Действие</th>
+                        </tr>
+                    </thead>               
+                    <tbody>
+                        {% for order in orders  %}
+                        <tr>
+                            <td>{{order.id}}</td>
+                            <td>{{order.user.first_name}}</td>
+                            <td>{{order.user.last_name}}</td>
+                            <td>{{order.user.email}}</td>
+                            <td>{{order.phone_number}}</td>
+                            <td>{{order.created_timestamp|date:"d.m.Y H:i"}}</td>
+                            <td>{{order.total_price}} ₽</td>
+                            <td>
+                                <div class="btn-group">
+                                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        ....
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="{% url "manager:view_orders" order.id %}">Просмотреть</a>
+                                        <a class="dropdown-item" href="#">Редактировать</a>
+                                        <a class="dropdown-item" href="{% url "manager:remove_orders" order.id %}">Удалить</a>
+                                    </div>
+                                  </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div> <!-- end card body-->
+        </div> <!-- end card -->
+    </div><!-- end col-->
+</div>
+<!-- end row-->
+    
 {% endblock %}
