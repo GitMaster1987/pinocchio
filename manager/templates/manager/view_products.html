@@ -16,7 +16,7 @@
         border-radius: 5px; /* Закругляем углы */
     }
 </style>
-{% endblock CSS %}
+{% endblock %}
 
 
 
@@ -57,7 +57,7 @@
                                         ....
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Редактировать</a>
+                                        <a class="dropdown-item" href="{% url "manager:edit_product" product.id %}">Редактировать</a>
                                         <a class="dropdown-item" 
                                            id="order_delete" 
                                            data-order-delete-id={{product.id}}

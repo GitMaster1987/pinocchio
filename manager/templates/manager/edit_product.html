@@ -1,0 +1,114 @@
+{% extends "manager_base.html" %}
+{% load static %}
+{% block header-title %}Редактирование блюда {{ product.name }}{% endblock %}
+{% block CSS %}
+<style>
+    .form-control, .btn {
+        border-radius: 10px;
+    }
+    .image-preview {
+        width: 150px;
+        height: auto;
+        object-fit: cover;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    .card-header {
+        background-color: #007BFF;
+        color: white;
+        font-size: 18px;
+        text-align: center;
+        border-radius: 5px 5px 0 0;
+    }
+    .btn-primary {
+        background-color: #007BFF;
+        border: none;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+               <h4 class="card-title">Редактирование</h4>
+                {# Форма редактирования блюда #}
+                <form method="POST" enctype="multipart/form-data" action="{% url 'manager:edit_product' product.id %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="name">Название блюда:</label>
+                        <input type="text" id="name" name="name" class="form-control" value="{{ product.name }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Описание блюда:</label>
+                        <textarea id="description" name="description" class="form-control" rows="3" required>{{ product.description }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image">Картинка блюда:</label>
+                        <input type="file" id="image" name="image" class="form-control-file">
+                        <img id="image-preview" src="{% if product.image %}{{ product.image.url }}{% endif %}" alt="Изображение блюда" class="image-preview mt-2">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="price">Цена:</label>
+                        <input type="text" id="price" name="price" class="form-control" step="0.01" value="{{ product.price|floatformat:2 }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="discount">Скидка (%):</label>
+                        <input type="text" id="discount" name="discount" class="form-control" step="0.01" value="{{ product.discount|floatformat:2 }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category">Категория:</label>
+                        <select id="category" name="category" class="form-control">
+                            {% for category in categories %}
+                            <option value="{{ category.id }}" {% if category.id == product.category.id %}selected{% endif %}>
+                                {{ category.title }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group form-check">
+                        <input type="checkbox" id="show" name="show" class="form-check-input" {% if product.show %}checked{% endif %}>
+                        <label for="show" class="form-check-label">Отображать блюдо на сайте</label>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                        <a href="{% url 'manager:view_products' %}" class="btn btn-secondary">Отмена</a>
+                    </div>
+                </form>                
+            </div> <!-- end card body-->
+        </div> <!-- end card -->
+    </div><!-- end col-->
+</div>
+<!-- end row-->
+{% endblock %}
+
+{% block jsScripts %}
+<script>
+    // JavaScript for live image preview
+    document.getElementById('image').addEventListener('change', function(event) {
+        const imageInput = event.target;
+        const imagePreview = document.getElementById('image-preview');
+        
+        // Ensure a file was selected
+        if (imageInput.files && imageInput.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // Set the preview image source to the uploaded file
+                imagePreview.src = e.target.result;
+            }
+            reader.readAsDataURL(imageInput.files[0]); // Read the file as a data URL
+        }
+    });
+</script>
+{% endblock %}

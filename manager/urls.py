@@ -21,4 +21,6 @@ urlpatterns = [
     path('return_processing/<int:order_id>/', views.return_processing, name='return_processing'),
     # '''Список наших блюд'''
     path('view_products/', views.view_products, name='view_products'),
+    # '''Редактирование блюда''
+    path('edit_product/<int:product_id>', views.edit_product, name='edit_product'),
 ]

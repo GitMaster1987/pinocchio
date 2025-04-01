@@ -1,9 +1,10 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import user_passes_test
 from django.http import Http404, JsonResponse
-from main.models import Products
+from main.models import Categories, Products
 from orders.models import Order, OrderItem
 from datetime import datetime
+
 # from django.views.decorators.http import require_POST
 
 
@@ -220,3 +221,40 @@ def view_products(request):
     products = Products.objects.filter(show=True)
     context = {"products": products}
     return render(request, "manager/view_products.html", context)
+
+
+# Метод редактирования блюда на сайте
+@group_required(["Manager"])
+def edit_product(request, product_id):
+    # Fetch the product by its ID
+    product = get_object_or_404(Products, id=product_id)
+
+    if request.method == "POST":
+        # Update the product fields with the submitted data
+        product.name = request.POST.get("name", product.name)
+        product.description = request.POST.get("description", product.description)
+        product.price = request.POST.get("price").replace(",", ".")
+        product.discount = request.POST.get("discount", "0.00").replace(",", ".")
+        product.show = (
+            "show" in request.POST
+        )  # Checkbox values are checked only if present in the POST data
+
+        # Update the category
+        category_id = request.POST.get("category")
+        if category_id:
+            product.category_id = category_id
+
+        # Update the image if a new file is uploaded
+        if request.FILES.get("image"):
+            product.image = request.FILES["image"]
+
+        # Save the changes to the database
+        product.save()
+
+        return redirect("manager:view_products")  # Adjust URL name as needed
+
+    # Render the edit form if the request is not POST
+    categories = Categories.objects.all()  # Retrieve all categories for dropdown
+    return render(
+        request, "manager/edit_product.html", {"product": product, "categories": categories}
+    )
