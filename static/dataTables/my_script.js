@@ -33,3 +33,51 @@ $(document).ready(function() {
         // buttons: [ 'copy', 'excel', 'pdf', 'print'],
     });
   });
+
+  $(document).ready(function () {
+
+    //Обрабатываем нажатие ссылки на удаление заказа
+    $(document).on("click", "#add_stop_list", function (e) {
+        // Блокируем его базовое действие
+        e.preventDefault();
+        const productId = $(this).data("stop-list-id");
+        const url = $(this).data("stop-list-url");
+        Swal.fire({
+            title: "Вы уверенны?",
+            text: "Перенести блюдо в стоп-лист!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Да, перенести!"
+          }).then(function (result) {
+            if (result.value) {
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: {
+                        product_id: productId,
+                        csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
+                    },
+                    success: function (response) {
+                        if (response.message) {
+                            
+                            setTimeout(function () {
+                                location.reload(); // Перезагрузка текущей страницы
+                            }, 1000); // Задержка в 1 секунду (1000 миллисекунд)
+                        }
+                    },
+                    error: function (xhr) {
+                        if (xhr.responseJSON && xhr.responseJSON.error) {
+                            alert(`Ошибка: ${xhr.responseJSON.error}`); // Error from server
+                        } else {
+                            alert("Произошла ошибка. Попробуйте снова."); // General error
+                        }
+                    },
+                });
+                Swal.fire("Успешно!", "Блюдо перенесено в стоп-лист.", "success");  
+            }
+        });
+        
+    });
+});

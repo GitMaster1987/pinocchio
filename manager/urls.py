@@ -22,5 +22,8 @@ urlpatterns = [
     # '''Список наших блюд'''
     path('view_products/', views.view_products, name='view_products'),
     # '''Редактирование блюда''
-    path('edit_product/<int:product_id>', views.edit_product, name='edit_product'),
+    path('edit_product/<int:product_id>/', views.edit_product, name='edit_product'),
+    # '''Добовление блюда в стоплист''
+    path('add_to_stop_list/', views.add_to_stop_list, name='add_to_stop_list'),
+    
 ]

@@ -22,24 +22,35 @@ def index(request):
     total_orders = Order.objects.count()
 
     # Total revenue from orders (sum of prices and quantities for all order items)
-    total_revenue = OrderItem.objects.aggregate(
-        total=Sum(F('price') * F('quantity'))
-    )['total'] or 0
+    total_revenue = (
+        OrderItem.objects.aggregate(total=Sum(F("price") * F("quantity")))["total"] or 0
+    )
 
     # Most popular product based on order item quantity
-    popular_product = OrderItem.objects.values('product__name').annotate(
-        total_quantity=Sum('quantity')
-    ).order_by('-total_quantity').first()
-    popular_product_name = popular_product['product__name'] if popular_product else "Нет данных"
+    popular_product = (
+        OrderItem.objects.values("product__name")
+        .annotate(total_quantity=Sum("quantity"))
+        .order_by("-total_quantity")
+        .first()
+    )
+    popular_product_name = (
+        popular_product["product__name"] if popular_product else "Нет данных"
+    )
 
     # Latest orders (e.g., 10 most recent orders)
-    latest_orders = Order.objects.prefetch_related('orderitem_set').order_by('-created_timestamp')[:10]
-    return render(request, "manager/index.html", {
-        "total_orders": total_orders,
-        "total_revenue": total_revenue,
-        "popular_product_name": popular_product_name,
-        "latest_orders": latest_orders,
-    })
+    latest_orders = Order.objects.prefetch_related("orderitem_set").order_by(
+        "-created_timestamp"
+    )[:10]
+    return render(
+        request,
+        "manager/index.html",
+        {
+            "total_orders": total_orders,
+            "total_revenue": total_revenue,
+            "popular_product_name": popular_product_name,
+            "latest_orders": latest_orders,
+        },
+    )
 
 
 @group_required(["Manager"])  # Разрешить доступ только группе "Manager"
@@ -278,5 +289,24 @@ def edit_product(request, product_id):
     # Render the edit form if the request is not POST
     categories = Categories.objects.all()  # Retrieve all categories for dropdown
     return render(
-        request, "manager/edit_product.html", {"product": product, "categories": categories}
+        request,
+        "manager/edit_product.html",
+        {"product": product, "categories": categories},
     )
+
+
+@group_required(["Manager"])
+def add_to_stop_list(request):
+    if request.method == "POST":
+        product_id = request.POST.get("product_id")
+        if not product_id:
+            return JsonResponse({"error": "ID продукта не передан."}, status=400)
+
+        product = get_object_or_404(Products, id=product_id)
+        product.show = False  # Set `show` to False to hide it
+        product.save()
+
+        return JsonResponse(
+            {"message": f"Продукт '{product.name}' добавлен в стоп-лист."}
+        )
+    return JsonResponse({"error": "Недопустимый метод запроса."}, status=405)

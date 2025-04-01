@@ -1,5 +1,6 @@
 from django.views.generic import TemplateView
 from main.models import Banner, Categories, Products, Chefs
+from users.models import User
 
 class IndexView(TemplateView):
     template_name = "main/index.html"  # Указываем шаблон для рендера

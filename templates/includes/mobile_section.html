@@ -1,5 +1,6 @@
 {% load static %}
 {% load carts_tags %}
+{% load custom_tags %}
 
 <nav class="cd-nav-container right_menu" id="cd-nav">
     <div class="header__open_menu">
@@ -13,6 +14,11 @@
             <div class="d-flex align-items-center">
                 <span>Вы вошли как: <b><b>{{user.username}}</b></b></span>    
             </div>
+            {% if user|in_group:"Manager" %}
+                <a class="page-scroll" href="{% url 'manager:index' %}" class="user-out-login" id="user-login" style"color:green">
+                    Панель менеджера <i class="fa-solid fa-user"></i>
+                </a>
+            {% endif %}
             <div class="d-grid gap-2" style="margin-top: 15px;">
                 <a class="btn btn-outline-success" href="{% url "user:logout" %}" class="user-out-login" id="user-logout" style"color:red">
                     Выйти &nbsp;<i class="fa-solid fa-right-from-bracket"></i>                    

@@ -1,5 +1,6 @@
 {% extends "manager_base.html" %}
 {% load static %}
+{% block Title %}Список блюд{% endblock  %}
 {% block header-title %}Список наших блюд{% endblock %}
 {% block CSS %}
 
@@ -59,9 +60,9 @@
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="{% url "manager:edit_product" product.id %}">Редактировать</a>
                                         <a class="dropdown-item" 
-                                           id="order_delete" 
-                                           data-order-delete-id={{product.id}}
-                                           data-order-delete-url = "#"
+                                           id="add_stop_list" 
+                                           data-stop-list-id={{product.id}}
+                                           data-stop-list-url = "{% url "manager:add_to_stop_list" %}"
                                            href="#">
                                            В стоп-лист
                                         </a>
@@ -83,6 +84,8 @@
 {% endblock %}
 
 {% block jsScripts %}
+    <!-- Custom Sweetalert2 js File -->
+    <script src="{% static "sweetalert2/sweetalert2.min.js" %}"></script>
     <!-- Custom datatable js File -->
     <script src="{% static "dataTables/dataTables.bootstrap5.min.js" %}"></script>
     <script src="{% static "dataTables/jquery.dataTables.min.js" %}"></script>

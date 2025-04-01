@@ -1,4 +1,6 @@
+{% load static %}
 {% load menu_tags %}
+{% load custom_tags %}
 <div class="collapse navbar-collapse d-none d-md-none d-lg-block" id="navbar">
     <div class="navbar-right">
         <ul class="nav navbar-nav">
@@ -6,13 +8,19 @@
             {% for menu in  menus %}
                 <li><a class="page-scroll {{menu.slug}}" href="#{{menu.slug}}">{{menu.title}}</a></li>
             {% endfor %}
+
             {% if user.is_authenticated %}
+                {% if user|in_group:"Manager" %}
+                    <a class="page-scroll" href="{% url 'manager:index' %}" class="user-out-login" id="user-login" style"color:red">
+                        Панель менеджера <i class="fa-solid fa-user"></i>
+                    </a>
+                {% endif %}
                 <li>
                     <a class="page-scroll" href="{% url "user:logout" %}" class="user-out-login" id="user-logout" style"color:red">
                         Выйти <i class="fa-solid fa-right-from-bracket"></i>                    
                     </a>
                 </li>
-            {% else %}
+            {% else %}               
                 <li>
                     <a class="page-scroll" href="{% url "user:login" %}" class="user-out-login" id="user-login" style"color:red">
                         Войти <i class="fa-solid fa-user"></i>
