@@ -1,9 +1,10 @@
+from datetime import datetime
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import user_passes_test
 from django.http import Http404, JsonResponse
+from django.db.models import Sum, Count, F
 from main.models import Categories, Products
 from orders.models import Order, OrderItem
-from datetime import datetime
 
 # from django.views.decorators.http import require_POST
 
@@ -17,7 +18,28 @@ def group_required(groups):
 
 @group_required(["Manager"])  # Разрешить доступ только группе "Manager"
 def index(request):
-    return render(request, "manager/index.html")
+    # Total number of orders
+    total_orders = Order.objects.count()
+
+    # Total revenue from orders (sum of prices and quantities for all order items)
+    total_revenue = OrderItem.objects.aggregate(
+        total=Sum(F('price') * F('quantity'))
+    )['total'] or 0
+
+    # Most popular product based on order item quantity
+    popular_product = OrderItem.objects.values('product__name').annotate(
+        total_quantity=Sum('quantity')
+    ).order_by('-total_quantity').first()
+    popular_product_name = popular_product['product__name'] if popular_product else "Нет данных"
+
+    # Latest orders (e.g., 10 most recent orders)
+    latest_orders = Order.objects.prefetch_related('orderitem_set').order_by('-created_timestamp')[:10]
+    return render(request, "manager/index.html", {
+        "total_orders": total_orders,
+        "total_revenue": total_revenue,
+        "popular_product_name": popular_product_name,
+        "latest_orders": latest_orders,
+    })
 
 
 @group_required(["Manager"])  # Разрешить доступ только группе "Manager"
