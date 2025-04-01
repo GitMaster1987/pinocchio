@@ -1,8 +1,8 @@
 {% extends "manager_base.html" %}
 {% load static %}
 {% block header-title %}
-Новые заказы
-<span class="badge badge-info badge-pill ml-3" style="font-size:12px;">
+Подтвержденные заказы
+<span class="badge badge-success badge-pill ml-3" style="font-size:12px;">
     {{count_order}}
 </span>
 {% endblock %}
@@ -48,9 +48,9 @@
                                     </button>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="{% url "manager:view_orders" order.id %}">Просмотреть</a>
-                                        {% if order.payment_on_get %}
-                                            <a class="dropdown-item" href="{% url "manager:edit_order" order.id %}">Редактировать</a>
-                                        {% endif %}
+                                        
+                                        <a class="dropdown-item" href="{% url "manager:return_processing" order.id %}">Вернуть в обработку</a>
+                                        
                                         <a class="dropdown-item" 
                                            id="order_delete" 
                                            data-order-delete-id={{order.id}}
@@ -73,11 +73,4 @@
 </div>
 <!-- end row-->
     
-{% endblock %}
-
-{% block jsScripts %}
-    <!-- Custom Sweetalert2 js File -->
-    <script src="{% static "sweetalert2/sweetalert2.min.js" %}"></script>
-    <!-- Проверка формы на корректность даты -->
-    <script src="{% static "manager/js/delete-order.js" %}"></script>
 {% endblock %}

@@ -2,6 +2,8 @@
 {% load count_orders_tags %}
 
 {% get_Count_Orders as count_order %}
+{% get_Count_Orders_Confirm as count_confirm %}
+
 
 {# Навигация на сайте #}
 <div class="topnav">
@@ -24,19 +26,32 @@
                         <div class="dropdown-menu" aria-labelledby="topnav-components">
                             <a href="{% url "manager:processing_orders" %}" class="dropdown-item">
                                 Новые заказы
-                                <span class="badge badge-danger badge-pill ml-4" style="font-size:12px;">
+                                <span class="badge badge-info badge-pill ml-4" style="font-size:12px;">
                                     {{count_order}}
                                 </span>
                             </a>
-                            <a href="ui-cards.html" class="dropdown-item">Обработанные</a>
+                            <a href="{% url "manager:confirms_order" %}" class="dropdown-item">
+                                Подтвержденные
+                                <span class="badge badge-success badge-pill ml-4" style="font-size:12px;">
+                                    {{count_confirm}}
+                                </span>
+                            </a>
                             <a href="ui-carousel.html" class="dropdown-item">Завершенные</a>
                         </div>
                     </li>
                     {# Список наших блюд #}
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">
-                            <i class="mdi mdi-pizza mr-2"></i>Наша продукция
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-components" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="mdi mdi-pizza mr-2"></i>Наша продукция <div class="arrow-down"></div>
                         </a>
+                        <div class="dropdown-menu" aria-labelledby="topnav-components">
+                            <a href="{% url "manager:view_products" %}" class="dropdown-item">
+                                Список блюд                              
+                            </a>
+                            <a href="{% url "manager:confirms_order" %}" class="dropdown-item">
+                                Стоп-лист
+                            </a>
+                        </div>
                     </li>
                     {# Список наших пользователей #}
                     <li class="nav-item">

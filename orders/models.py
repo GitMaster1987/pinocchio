@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.core.validators import RegexValidator
 from django.db import models
 from main.models import Products
@@ -51,6 +52,14 @@ class Order(models.Model):
     status = models.CharField(
         max_length=50, default="В обработке", verbose_name="Статус заказа"
     )
+    order_date = models.DateTimeField(
+    auto_now_add=False,  # Значение не устанавливается автоматически
+    blank=True,          # Разрешает оставлять поле пустым в формах
+    null=True,           # Разрешает хранение NULL в базе данных
+    verbose_name="Дата выполнения заказа"
+)
+
+
 
     def total_price(self):
         # Суммируем стоимость всех товаров, связанных с заказом

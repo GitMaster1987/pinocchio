@@ -71,16 +71,32 @@
                         <div class="col-6">
                             <div class="float-right">
                                 <p><b>Общее количество:</b> {{total_quantity}}</p>
+                                <p><b>{{status_payment}}</b></p>
                                 <h3>{{total_price|floatformat:2}} ₽</h3>
                             </div>
                             <div class="clearfix"></div>
                         </div>
                     </div>
 
-                    <div class="d-print-none my-4">
+                    <div class="d-print-none my-4">                        
                         <div class="text-right">
                             <a href="javascript:window.print()" class="btn btn-primary waves-effect waves-light"><i class="fa fa-print m-r-5"></i> Print</a>
-                            <a href="#" class="btn btn-info waves-effect waves-light">Submit</a>
+                            {% if order.status == "В обработке" %}
+                            <button type="button" 
+                                        class="btn btn-info waves-effect waves-light" 
+                                        data-toggle="modal" 
+                                        data-target="#confirm_order_date">
+                                        Подтвердить заказ
+                                </button>
+                            {% else %}
+                            <a type="button" 
+                                        class="btn btn-info waves-effect waves-light" 
+                                        href="{{ request.META.HTTP_REFERER|default:'#' }}">
+                                        На предыдущую страницу
+                            </a>
+                            {% endif %}
+                            
+                            {% comment %} <a href="{% url "manager:confirm_order" order.id %}" class="btn btn-info waves-effect waves-light">Подтвердить заказ</a> {% endcomment %}
                         </div>
                     </div>
                 </div>
@@ -88,4 +104,43 @@
         </div> <!-- end col -->
     </div>
     <!-- end row -->
+
+    <!-- Модальное окно выбора даты выполнения заказа -->
+    <div class="modal fade" id="confirm_order_date" tabindex="-1" role="dialog" aria-labelledby="confirm_order_dateTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirm_order_dateLongTitle">Дата и время заказа</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{% url 'manager:confirm_order' %}">
+                        {% csrf_token %}
+                        <input type="text" name="order_id" value="{{order.id}}" class="d-none">
+                        <div class="mb-3 date-input">
+                            <label class="form-label"><span class="text-danger">*</span> Время выполнения заказа:</label>
+                            <input type="datetime-local" 
+                                   class="form-control"
+                                   id="dateOrder"
+                                   name="dateOrder"
+                                   required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                            <button type="submit" class="btn btn-primary">Применить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+      </div>
+{% endblock %}
+
+{% block jsScripts %}
+    <!-- Custom Sweetalert2 js File -->
+    <script src="{% static "sweetalert2/sweetalert2.min.js" %}"></script>
+    <!-- Проверка формы на корректность даты -->
+    <script src="{% static "manager/js/order-correct-date.js" %}"></script>
 {% endblock %}

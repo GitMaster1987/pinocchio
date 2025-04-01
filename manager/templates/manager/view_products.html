@@ -1,0 +1,91 @@
+{% extends "manager_base.html" %}
+{% load static %}
+{% block header-title %}Список наших блюд{% endblock %}
+{% block CSS %}
+
+<link href="{% static "manager/plugins/datatables/responsive.bootstrap4.css" %}" rel="stylesheet" type="text/css" />
+<link href="{% static "manager/plugins/datatables/dataTables.bootstrap4.css" %}" rel="stylesheet" type="text/css" />
+<link href="{% static "manager/plugins/datatables/buttons.bootstrap4.css" %}" rel="stylesheet" type="text/css" />
+<link href="{% static "manager/plugins/datatables/select.bootstrap4.css" %}" rel="stylesheet" type="text/css" />
+
+<style>
+    .thumbnail {
+        width: 80px; /* Ширина миниатюры */
+        height: auto; /* Сохраняет пропорции */
+        border: 1px solid #ccc; /* Добавляем рамку */
+        border-radius: 5px; /* Закругляем углы */
+    }
+</style>
+{% endblock CSS %}
+
+
+
+{# Контент на странице #}
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                {% if products %}<h4 class="card-title">Список блюд</h4>{% endif %}
+                {% if not products %}                
+                <h3>Список блюд пуст</h3>
+                {% else %}
+                <table id="views-products-datatable" class="table dt-responsive nowrap">
+                    <thead>
+                        <tr>
+                            <th>ID блюда</th>
+                            <th>Миниатюра</th>
+                            <th>Название</th>
+                            <th>Скидка</th>
+                            <th>Цена</th>
+                            <th>Категория</th>
+                            <th>Действие</th>
+                        </tr>
+                    </thead>               
+                    <tbody>
+                        {% for product in products  %}
+                        <tr>
+                            <td>{{product.id}}</td>
+                            <td><img src="{{product.image.url}}" alt="Миниатюра" class="thumbnail"></td>
+                            <td>{{product.name}}</td>
+                            <td>{{product.discount}}</td>
+                            <td>{{product.price}}</td>
+                            <td>{{product.category.title}}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        ....
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">Редактировать</a>
+                                        <a class="dropdown-item" 
+                                           id="order_delete" 
+                                           data-order-delete-id={{product.id}}
+                                           data-order-delete-url = "#"
+                                           href="#">
+                                           В стоп-лист
+                                        </a>
+                                        {% csrf_token %}
+                                    </div>
+                                  </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% endif %}
+            </div> <!-- end card body-->
+        </div> <!-- end card -->
+    </div><!-- end col-->
+</div>
+<!-- end row-->
+    
+{% endblock %}
+
+{% block jsScripts %}
+    <!-- Custom datatable js File -->
+    <script src="{% static "dataTables/dataTables.bootstrap5.min.js" %}"></script>
+    <script src="{% static "dataTables/jquery.dataTables.min.js" %}"></script>
+    <!-- Скрипт построения таблицы -->
+    <script src="{% static "dataTables/my_script.js" %}"></script>
+{% endblock %}

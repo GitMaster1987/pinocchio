@@ -1,0 +1,178 @@
+{% extends "manager_base.html" %}
+{% load static %}
+{% block header-title %}Редактирование заказа № {{order.id}}{% endblock %}
+
+{# Контент на странице #}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row mt-4">
+                        <div class="col-6">
+                            <h6 class="font-weight-bold"><strong>Инфо:</strong></h6>
+
+                            <address class="line-h-24">
+                                <b>{{order.user.first_name}} {{order.user.last_name}}</b><br>
+                                {{order.user.email}}<br>
+                                <abbr title="Phone">P:</abbr> {{order.phone_number}}
+                            </address>
+
+                        </div><!-- end col -->
+                        <div class="col-6">
+                            <div class="mt-3 float-right">
+                                <p class="mb-2"><strong>Дата заказа: </strong> {{order.created_timestamp|date:"d.m.Y H:i"}}</p>
+                                <p class="mb-2"><strong>Статус заказа: </strong> <span class="badge badge-soft-success">{{order.status}}</span></p>
+                                <p class="m-b-10"><strong>Order ID: </strong> #{{order.id}}</p>
+                            </div>
+                        </div><!-- end col -->
+                    </div>
+                    <!-- end row -->
+                                        
+                <form method="post" id="orderEditFormID">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table mt-4">
+                                    <thead>
+                                    <tr><th>№ п/п</th>
+                                        <th>Заказанное блюдо</th>
+                                        <th>Количество</th>
+                                        <th>Цана за ед.</th>
+                                        <th class="text-right">Общая цена</th>
+                                        <th class="text-right">&nbsp;</th>
+                                    </tr></thead>
+                                    <tbody>
+                                    {% for item in order_items %}   
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>
+                                            <input class="form-control form-control-sm" 
+                                                   type="text" 
+                                                   value="{{item.name}}" readonly>
+                                            <br/>
+                                            Категория: {{item.product.category.title}}
+                                        </td>
+                                        <td>
+                                            {# Изменение кол-ва заказов #}
+                                            <div class="d-flex align-items-center w-100">
+                                                <button class="btn btn-outline-secondary btn-sm me-2 znak-products decrement px-md-3" 
+                                                        data-order-id="{{ item.id }}"
+                                                        data-order-change-url="{% url 'manager:order_quantity_change' %}">
+                                                    {% csrf_token %}           
+                                                    <i class="mdi mdi-minus"></i>
+                                                </button>
+                                            
+                                                <input type="text" value="{{item.quantity}}" min="1"
+                                                       class="form-control form-control-sm text-center fw-bold fs-6 number" 
+                                                       style="flex-grow: 1; width: auto;" readonly>
+                                            
+                                                <button class="btn btn-outline-secondary btn-sm ms-2 znak-products increment px-md-3" 
+                                                        data-order-id="{{ item.id }}"
+                                                        data-order-change-url="{% url 'manager:order_quantity_change' %}">
+                                                    {% csrf_token %}
+                                                    <i class="mdi mdi-plus"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td>{{item.product.sell_price|floatformat:2}} ₽</td>
+                                        <td class="text-right">
+                                            {{item.products_price|floatformat:2}} ₽
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger remove_order_cart"
+                                                        data-remove-id="{{ item.id }}"
+                                                        data-remove-change-url="{% url 'manager:order_remove_cart' %}"
+                                                        >                                                
+                                                <span class="mdi mdi-delete"></span>                                               
+                                            </button>
+                                            {% csrf_token %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}                                   
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                                <!-- Button trigger modal -->
+                                <button type="button" 
+                                        class="btn btn-primary btn-sm" 
+                                        data-toggle="modal" 
+                                        data-target="#AddFoodBtn">
+                                        Добавить блюдо
+                                </button>
+                            <div class="clearfix pt-5">
+                                <h6 class="text-uppercase">Общая сумма:</h6>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="float-right">
+                                <p><b>Общее количество:</b> {{total_quantity}}</p>
+                                <h3>{{total_price|floatformat:2}} ₽</h3>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+
+                    <div class="d-print-none my-4">
+                        <div class="text-right">
+                            <a href="javascript:window.print()" class="btn btn-primary waves-effect waves-light"><i class="fa fa-print m-r-5"></i> Print</a>
+                            <a href="{% url "manager:processing_orders" %}" class="btn btn-info waves-effect waves-light">Применить</a>
+                        </div>
+                    </div>
+                </form>
+                </div>
+            </div> <!-- end card-->
+        </div> <!-- end col -->
+    </div>
+    <!-- end row -->
+
+    <!-- Модальное окно с возможностью выбора блюд -->
+  <div class="modal fade" id="AddFoodBtn" tabindex="-1" role="dialog" aria-labelledby="AddFoodBtnTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Добавить новое блюдо</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'manager:add_order_item' order.id %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="productSelect" class="form-label">Выберите блюдо</label>
+                        <select id="productSelect" name="product_id" class="form-select">
+                            {% for product in products %}
+                                {% if product.id not in added_product_ids %}
+                                    <option value="{{ product.id }}">{{ product.name }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quantityInput" class="form-label">Количество</label>
+                        <input type="number" id="quantityInput" name="quantity" class="form-control" placeholder="Количество" min="1" value="1">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        <button type="submit" class="btn btn-primary">Добавить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+  </div>
+{% comment %} ------------------ {% endcomment %}
+
+{% endblock %}
+
+{% block jsScripts %}
+    <!-- Custom Sweetalert2 js File -->
+    <script src="{% static "sweetalert2/sweetalert2.min.js" %}"></script>
+    <!-- Me Scpript JS Manager -->
+    <script src="{% static "manager/js/edit-order.js" %}"></script>
+{% endblock %}

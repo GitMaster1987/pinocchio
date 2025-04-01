@@ -18,6 +18,9 @@
         <link href="{% static "manager/css/bootstrap.min.css" %}" rel="stylesheet" type="text/css" />
         <link href="{% static "manager/css/icons.min.css" %}" rel="stylesheet" type="text/css" />
         <link href="{% static "manager/css/theme.min.css" %}" rel="stylesheet" type="text/css" />
+        <!-- Sweetalert2 CSS File  -->
+        <link rel="stylesheet" type="text/css" href="{% static "sweetalert2/sweetalert2.min.css" %}">
+        {% block CSS %}{% endblock CSS %}
 
     </head>
 
@@ -93,9 +96,10 @@
         <!-- Morris Custom Js-->
         <script src="{% static "manager/pages/dashboard-demo.js" %}"></script>
 
-
         <!-- App js -->
         <script src="{% static "manager/js/theme.js" %}"></script>
+
+        {% block jsScripts %}{% endblock %}
 
     </body>
 
