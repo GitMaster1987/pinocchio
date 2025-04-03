@@ -27,10 +27,20 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                {% if products %}<h4 class="card-title">Список блюд</h4>{% endif %}
+                {% if products %}
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="card-title">Список блюд</h4>
+                        <a type="button" 
+                           class="btn btn-primary btn-sm"
+                           href="{% url "manager:add_product" %}">
+                           Добавить новое блюдо
+                        </a>
+                    </div>
+                {% endif %}
                 {% if not products %}                
                 <h3>Список блюд пуст</h3>
                 {% else %}
+                <br>
                 <table id="views-products-datatable" class="table dt-responsive nowrap">
                     <thead>
                         <tr>

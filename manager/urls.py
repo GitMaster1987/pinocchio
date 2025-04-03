@@ -25,5 +25,7 @@ urlpatterns = [
     path('edit_product/<int:product_id>/', views.edit_product, name='edit_product'),
     # '''Добовление блюда в стоплист''
     path('add_to_stop_list/', views.add_to_stop_list, name='add_to_stop_list'),
+    # '''Добовление нового блюда''
+    path("add_product/", views.add_product, name="add_product"),
     
 ]

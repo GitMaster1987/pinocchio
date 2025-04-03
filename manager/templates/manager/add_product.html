@@ -1,0 +1,141 @@
+{% extends "manager_base.html" %}
+{% load static %}
+{% block Title %}Добавление нового блюда{% endblock  %}
+{% block header-title %}Новое блюдо{% endblock %}
+
+{% block CSS %}
+<style>
+    .form-control, .btn {
+        border-radius: 10px;
+    }
+    .image-preview {
+        width: 150px;
+        height: auto;
+        object-fit: cover;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    .card-header {
+        background-color: #007BFF;
+        color: white;
+        font-size: 18px;
+        text-align: center;
+        border-radius: 5px 5px 0 0;
+    }
+    .btn-primary {
+        background-color: #007BFF;
+        border: none;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Добавление нового блюда</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data" action="{% url 'manager:add_product' %}">
+                    {% csrf_token %}
+                    
+                    <!-- Name Field -->
+                    <div class="form-group">
+                        <label for="name">Название блюда:</label>
+                        <input type="text" id="name" name="name" class="form-control {% if form.name.errors %}is-invalid{% endif %}" placeholder="Введите название" required>
+                        {% for error in form.name.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Description Field -->
+                    <div class="form-group">
+                        <label for="description">Описание блюда:</label>
+                        <textarea id="description" name="description" class="form-control {% if form.description.errors %}is-invalid{% endif %}" rows="3" placeholder="Введите описание" required></textarea>
+                        {% for error in form.description.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Image Field -->
+                    <div class="form-group">
+                        <label for="image">Картинка блюда:</label>
+                        <input type="file" id="image" name="image" class="form-control-file {% if form.image.errors %}is-invalid{% endif %}">
+                        {% for error in form.image.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Price Field -->
+                    <div class="form-group">
+                        <label for="price">Цена:</label>
+                        <input type="text" id="price" name="price" class="form-control {% if form.price.errors %}is-invalid{% endif %}" step="0.01" placeholder="Введите цену" required>
+                        {% for error in form.price.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Discount Field -->
+                    <div class="form-group">
+                        <label for="discount">Скидка (%):</label>
+                        <input type="text" id="discount" name="discount" class="form-control {% if form.discount.errors %}is-invalid{% endif %}" step="0.01" placeholder="Введите скидку (если есть)">
+                        {% for error in form.discount.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Category Field -->
+                    <div class="form-group">
+                        <label for="category">Категория:</label>
+                        <select id="category" name="category" class="form-control {% if form.category.errors %}is-invalid{% endif %}">
+                            {% for category in form.fields.category.queryset %}
+                            <option value="{{ category.id }}">{{ category.title }}</option>
+                            {% endfor %}
+                        </select>
+                        {% for error in form.category.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Show Field -->
+                    <div class="form-group form-check">
+                        <input type="checkbox" id="show" name="show" class="form-check-input" checked>
+                        <label for="show" class="form-check-label">Отображать блюдо на сайте</label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Добавить блюдо</button>
+                        <a href="{% url 'manager:view_products' %}" class="btn btn-secondary">Отмена</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block jsScripts %}
+<script>
+    // JavaScript for live image preview
+    document.getElementById('image').addEventListener('change', function(event) {
+        const imageInput = event.target;
+        const imagePreview = document.getElementById('image-preview');
+        
+        // Ensure a file was selected
+        if (imageInput.files && imageInput.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // Set the preview image source to the uploaded file
+                imagePreview.src = e.target.result;
+            }
+            reader.readAsDataURL(imageInput.files[0]); // Read the file as a data URL
+        }
+    });
+</script>
+{% endblock %}

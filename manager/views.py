@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.http import Http404, JsonResponse
 from django.db.models import Sum, Count, F
 from main.models import Categories, Products
+from manager.forms import ProductForm
 from orders.models import Order, OrderItem
 
 # from django.views.decorators.http import require_POST
@@ -310,3 +311,15 @@ def add_to_stop_list(request):
             {"message": f"Продукт '{product.name}' добавлен в стоп-лист."}
         )
     return JsonResponse({"error": "Недопустимый метод запроса."}, status=405)
+
+@group_required(["Manager"])
+def add_product(request):
+    if request.method == "POST":
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect("manager:view_products")  # Redirect to the list of products
+    else:
+        form = ProductForm()
+    categories = Categories.objects.all()  # Retrieve categories for dropdown
+    return render(request, "manager/add_product.html", {"form": form, "categories": categories})
