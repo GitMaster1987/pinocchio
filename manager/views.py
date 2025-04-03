@@ -1,6 +1,11 @@
 from datetime import datetime
+from django.views.generic import TemplateView
+from django.views.generic import ListView
+from django.views.generic import DetailView
+from django.views import View
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import user_passes_test
+from django.utils.decorators import method_decorator
 from django.http import Http404, JsonResponse
 from django.db.models import Sum, Count, F
 from main.models import Categories, Products
@@ -17,220 +22,276 @@ def group_required(groups):
     return user_passes_test(check_user_group)
 
 
-@group_required(["Manager"])  # Разрешить доступ только группе "Manager"
-def index(request):
-    # Total number of orders
-    total_orders = Order.objects.count()
+@method_decorator(group_required(["Manager"]), name="dispatch")
+class ManagerDashboardView(TemplateView):
+    template_name = "manager/index.html"
 
-    # Total revenue from orders (sum of prices and quantities for all order items)
-    total_revenue = (
-        OrderItem.objects.aggregate(total=Sum(F("price") * F("quantity")))["total"] or 0
-    )
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
-    # Most popular product based on order item quantity
-    popular_product = (
-        OrderItem.objects.values("product__name")
-        .annotate(total_quantity=Sum("quantity"))
-        .order_by("-total_quantity")
-        .first()
-    )
-    popular_product_name = (
-        popular_product["product__name"] if popular_product else "Нет данных"
-    )
+        # Total number of orders
+        context["total_orders"] = Order.objects.count()
 
-    # Latest orders (e.g., 10 most recent orders)
-    latest_orders = Order.objects.prefetch_related("orderitem_set").order_by(
-        "-created_timestamp"
-    )[:10]
-    return render(
-        request,
-        "manager/index.html",
-        {
-            "total_orders": total_orders,
-            "total_revenue": total_revenue,
-            "popular_product_name": popular_product_name,
-            "latest_orders": latest_orders,
-        },
-    )
+        # Total revenue from orders (sum of prices and quantities for all order items)
+        context["total_revenue"] = (
+            OrderItem.objects.aggregate(total=Sum(F("price") * F("quantity")))["total"]
+            or 0
+        )
 
+        # Most popular product based on order item quantity
+        popular_product = (
+            OrderItem.objects.values("product__name")
+            .annotate(total_quantity=Sum("quantity"))
+            .order_by("-total_quantity")
+            .first()
+        )
+        context["popular_product_name"] = (
+            popular_product["product__name"] if popular_product else "Нет данных"
+        )
 
-@group_required(["Manager"])  # Разрешить доступ только группе "Manager"
-def get_processing_orders(request):
-    orders_in_processing = Order.objects.filter(status="В обработке")
-    count_order = Order.objects.filter(status="В обработке").count()
-    context = {"orders": orders_in_processing, "count_order": count_order}
-    return render(request, "manager/processing_orders.html", context)
+        # Latest orders (e.g., 10 most recent orders)
+        context["latest_orders"] = Order.objects.prefetch_related("orderitem_set").order_by(
+            "-created_timestamp"
+        )[:10]
+
+        return context
+
+# Список новых заказов
+@method_decorator(group_required(["Manager"]), name="dispatch")
+class ProcessingOrdersView(ListView):
+    model = Order
+    template_name = "manager/processing_orders.html"
+    context_object_name = "orders"
+
+    def get_queryset(self):
+        # Filter orders with the status "В обработке"
+        return Order.objects.filter(status="В обработке")
+
+    def get_context_data(self, **kwargs):
+        # Add additional context for the count of orders
+        context = super().get_context_data(**kwargs)
+        context["count_order"] = self.get_queryset().count()
+        return context
 
 
 # Просмотр информации по заказу
-@group_required(["Manager"])
-def view_orders(request, order_id):
-    # Получаем заказ по ID или возвращаем 404
-    order = get_object_or_404(Order, id=order_id)
+@method_decorator(group_required(["Manager"]), name="dispatch")
+class ViewOrderDetailView(DetailView):
+    model = Order
+    template_name = "manager/view_order.html"
+    context_object_name = "order"
 
-    # Получаем все позиции (блюда), связанные с заказом
-    order_items = OrderItem.objects.filter(order=order)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
-    # Считаем общую сумму заказа
-    total_price = sum(item.price * item.quantity for item in order_items)
+        # Get related order items
+        order_items = OrderItem.objects.filter(order=self.object)
 
-    # Считаем общее количество товаров
-    total_quantity = sum(item.quantity for item in order_items)
+        # Calculate total price and total quantity
+        total_price = sum(item.price * item.quantity for item in order_items)
+        total_quantity = sum(item.quantity for item in order_items)
 
-    # Статус оплаты
-    status_payment = ""
-    if order.payment_on_get:
-        status_payment = "Оплата после получения"
-    elif order.is_paid:
-        status_payment = "Заказ оплачен картой"
+        # Determine payment status
+        if self.object.payment_on_get:
+            status_payment = "Оплата после получения"
+        elif self.object.is_paid:
+            status_payment = "Заказ оплачен картой"
+        else:
+            status_payment = "Не оплачено"
 
-    context = {
-        # "order_id": order_id,
-        "order": order,  # Заказ
-        "order_items": order_items,  # Список блюд
-        "total_price": total_price,  # Общая сумма заказа
-        "total_quantity": total_quantity,  # Общее количество блюд
-        "status_payment": status_payment,  # Статус оплаты заказа
-    }
+        # Add custom context
+        context["order_items"] = order_items
+        context["total_price"] = total_price
+        context["total_quantity"] = total_quantity
+        context["status_payment"] = status_payment
 
-    return render(request, "manager/view_order.html", context)
+        return context
 
 
 # Удаление существующего заказа
-@group_required(["Manager"])
-def remove_orders(request):
-    if request.method == "POST":  # Indentation for the POST block is correct
-        # Получаем `order_id` из тела запроса
+@method_decorator(group_required(["Manager"]), name="dispatch")
+class RemoveOrderView(View):
+    def post(self, request, *args, **kwargs):
+        # Get `order_id` from the request POST data
         order_id = request.POST.get("order_id")
 
         if not order_id:
             return JsonResponse({"error": "ID заказа не передан."}, status=400)
 
-        # Находим заказ или возвращаем 404
+        # Find the order or return a 404 error
         order = get_object_or_404(Order, id=order_id)
-        order.delete()  # Удаляем заказ
+        order.delete()  # Delete the order
 
         return JsonResponse({"message": "Заказ успешно удалён."})
 
-    # This return should be outside the if block
-    return JsonResponse(
-        {"error": "Удаление доступно только через POST-запрос."}, status=405
-    )
+    def get(self, request, *args, **kwargs):
+        return JsonResponse(
+            {"error": "Удаление доступно только через POST-запрос."}, status=405
+        )
 
 
 # ''' Редактирование заказа пользователя '''
-@group_required(["Manager"])
-def edit_order(request, order_id):
-    order = get_object_or_404(Order, pk=order_id)
-    # Получаем все позиции (блюда), связанные с заказом
-    order_items = OrderItem.objects.filter(order=order)
-    # Считаем общую сумму заказа
-    total_price = sum(item.price * item.quantity for item in order_items)
-    # Считаем общее количество товаров
-    total_quantity = sum(item.quantity for item in order_items)
-    # Список наших блюд, для модального окна
-    products = Products.objects.all()
+@method_decorator(group_required(["Manager"]), name="dispatch")
+class EditOrderView(DetailView):
+    model = Order
+    template_name = "manager/edit_order.html"
+    context_object_name = "order"
 
-    context = {
-        "order": order,
-        "order_items": order_items,  # Список блюд
-        "total_price": total_price,  # Общая сумма заказа
-        "total_quantity": total_quantity,  # Общее количество блюд
-        "products": products,
-        "added_product_ids": [
-            item.product.id for item in order_items
-        ],  # Список ID добавленных блюд
-        # 'formset': formset
-    }
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
-    return render(request, "manager/edit_order.html", context)
+        # Get related order items
+        order_items = OrderItem.objects.filter(order=self.object)
 
+        # Calculate total price and total quantity
+        total_price = sum(item.price * item.quantity for item in order_items)
+        total_quantity = sum(item.quantity for item in order_items)
 
-@group_required(["Manager"])
-def order_quantity_change(request):
+        # List of all products for modal selection
+        products = Products.objects.all()
 
-    order_id = request.POST.get("order_id")
-    quantity = request.POST.get("quantity")
+        # Prepare context data
+        context["order_items"] = order_items
+        context["total_price"] = total_price
+        context["total_quantity"] = total_quantity
+        context["products"] = products
+        context["added_product_ids"] = [item.product.id for item in order_items]
 
-    order = OrderItem.objects.get(id=order_id)
-
-    order.quantity = quantity
-    order.save()
-
-    return JsonResponse({"success": True})
+        return context
 
 
-@group_required(["Manager"])
-def order_remove_cart(request):
-    order_id = request.POST.get("order_id")
-    order = OrderItem.objects.get(id=order_id)
-    order.delete()
+# Изменение кол-ва блюд в заказе
+@method_decorator(group_required(["Manager"]), name="dispatch")
+class OrderQuantityChangeView(View):
+    def post(self, request, *args, **kwargs):
+        # Get order item ID and new quantity from POST data
+        order_id = request.POST.get("order_id")
+        quantity = request.POST.get("quantity")
 
-    return JsonResponse({"success": True})
+        if not order_id or not quantity:
+            return JsonResponse({"error": "order_id и quantity обязательны."}, status=400)
+
+        # Get the specific order item or return 404 if not found
+        order_item = get_object_or_404(OrderItem, id=order_id)
+
+        # Update the quantity
+        try:
+            order_item.quantity = int(quantity)
+            order_item.save()
+        except ValueError:
+            return JsonResponse({"error": "Количество должно быть числом."}, status=400)
+
+        return JsonResponse({"success": True})
+
+# Удаление блюда из заказа пользлвателя
+@method_decorator(group_required(["Manager"]), name="dispatch")
+class OrderRemoveCartView(View):
+    def post(self, request, *args, **kwargs):
+        # Get order item ID from POST data
+        order_id = request.POST.get("order_id")
+
+        if not order_id:
+            return JsonResponse({"error": "ID заказа не передан."}, status=400)
+
+        # Get the order item or return 404
+        order_item = get_object_or_404(OrderItem, id=order_id)
+
+        # Delete the order item
+        order_item.delete()
+
+        return JsonResponse({"success": True})
+
+    def get(self, request, *args, **kwargs):
+        return JsonResponse(
+            {"error": "Удаление доступно только через POST-запрос."}, status=405
+        )
 
 
-# Добавление нового товара
-@group_required(["Manager"])
-def add_order_item(request, order_id):
-    order = get_object_or_404(Order, pk=order_id)
-    product_id = request.POST.get("product_id")
-    quantity = int(request.POST.get("quantity"))
+# Добавление нового товара в заказ пользователя
+@method_decorator(group_required(["Manager"]), name="dispatch")
+class AddOrderItemView(View):
+    def post(self, request, order_id, *args, **kwargs):
+        # Retrieve the order using `order_id`
+        order = get_object_or_404(Order, pk=order_id)
 
-    # Найдите продукт
-    product = get_object_or_404(Products, pk=product_id)
+        # Get product_id and quantity from POST data
+        product_id = request.POST.get("product_id")
+        quantity = request.POST.get("quantity")
 
-    # Создайте новый элемент заказа
-    OrderItem.objects.create(
-        order=order,
-        product=product,
-        quantity=quantity,
-        name=product.name,  # Сохраняем имя продукта
-        price=product.price,
-    )
-    # Вернуться на страницу детализированного заказа (или на нужную вам страницу)
-    return redirect(request.META["HTTP_REFERER"])
+        if not product_id or not quantity:
+            # If either value is missing, return an error
+            return JsonResponse({"error": "Продукт или количество не переданы."}, status=400)
+
+        try:
+            quantity = int(quantity)  # Ensure quantity is a valid integer
+        except ValueError:
+            return JsonResponse({"error": "Количество должно быть числом."}, status=400)
+
+        # Find the product or return 404 if not found
+        product = get_object_or_404(Products, pk=product_id)
+
+        # Create a new order item
+        OrderItem.objects.create(
+            order=order,
+            product=product,
+            quantity=quantity,
+            name=product.name,  # Save the product's name
+            price=product.price,  # Save the product's price
+        )
+
+        # Redirect back to the referring page
+        return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
 # Подтверждаем заказ пользователя
-@group_required(["Manager"])
-def confirm_order(request):
-    if request.method == "POST":
-        # Получаем данные из POST-запроса
+@method_decorator(group_required(["Manager"]), name="dispatch")
+class ConfirmOrderView(View):
+    def post(self, request, *args, **kwargs):
+        # Retrieve data from POST request
         order_id = request.POST.get("order_id")
         order_date = request.POST.get("dateOrder")
 
-        # Проверка на наличие даты
+        # Check if order_date is provided
         if not order_date:
             raise Http404("Страница не найдена")
 
-        # Преобразуем дату из строки в объект datetime
+        # Convert date string to datetime object
         try:
-            order_date_obj = datetime.strptime(
-                order_date, "%Y-%m-%dT%H:%M"
-            )  # Формат datetime-local
+            order_date_obj = datetime.strptime(order_date, "%Y-%m-%dT%H:%M")  # datetime-local format
         except ValueError:
             raise Http404("Страница не найдена")
 
-        # Получаем заказ по ID
+        # Retrieve the order by ID or raise 404
         order = get_object_or_404(Order, id=order_id)
 
-        # Обновляем поля заказа
+        # Update order fields
         order.order_date = order_date_obj
         order.status = "Подтвержден"
-        order.save()  # Сохраняем изменения
-        # Перенаправляем на страницу заказов
+        order.save()  # Save changes
+
+        # Redirect to processing orders page
         return redirect("manager:processing_orders")
 
-    raise Http404("Страница не найдена")
+    def get(self, request, *args, **kwargs):
+        raise Http404("Страница не найдена")
 
 
 # Список подтвержденных заказов
-@group_required(["Manager"])  # Разрешить доступ только группам "Chefs" и "Manager"
-def confirms_order(request):
-    orders_confirms = Order.objects.filter(status="Подтвержден")
-    count_order = Order.objects.filter(status="Подтвержден").count()
-    context = {"orders": orders_confirms, "count_order": count_order}
-    return render(request, "manager/confirms_order.html", context)
+@method_decorator(group_required(["Chefs", "Manager"]), name="dispatch")
+class ConfirmsOrderListView(ListView):
+    model = Order
+    template_name = "manager/confirms_order.html"
+    context_object_name = "orders"
+
+    def get_queryset(self):
+        # Filter orders with status "Подтвержден"
+        return Order.objects.filter(status="Подтвержден")
+
+    def get_context_data(self, **kwargs):
+        # Add additional context for the count of orders
+        context = super().get_context_data(**kwargs)
+        context["count_order"] = self.get_queryset().count()
+        return context
 
 
 # Возвращаем заказ в обработку
