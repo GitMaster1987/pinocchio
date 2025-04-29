@@ -14,7 +14,7 @@ from orders.models import Order, OrderItem
 
 # from django.views.decorators.http import require_POST
 
-
+# Группа для прав доступа к странице
 def group_required(groups):
     def check_user_group(user):
         return user.groups.filter(name__in=groups).exists() or user.is_superuser
@@ -295,19 +295,24 @@ class ConfirmsOrderListView(ListView):
 
 
 # Возвращаем заказ в обработку
-@group_required(["Manager"])
-def return_processing(request, order_id):
-    # Получаем заказ по ID или возвращаем 404
-    order = get_object_or_404(Order, id=order_id)
+@method_decorator(group_required("Manager"), name="dispatch")
+class ReturnProcessingView(View):
 
-    order.status = "В обработке"  # Меняем статус заказа
+    def post(self, request, order_id):
+        # Получаем заказ по ID или возвращаем 404
+        order = get_object_or_404(Order, id=order_id)
 
-    order.order_date = None  # Очищаем дату подтвержденного заказа
+        # Меняем статус заказа
+        order.status = "В обработке"
 
-    order.save()  # Сохраняем изменения
+        # Очищаем дату подтвержденного заказа
+        order.order_date = None
 
-    # Вернуться на страницу детализированного заказа (или на нужную вам страницу)
-    return redirect(request.META["HTTP_REFERER"])
+        # Сохраняем изменения
+        order.save()
+
+        # Перенаправляем обратно на предыдущую страницу
+        return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
 # Список блюд для сайта
@@ -356,7 +361,7 @@ def edit_product(request, product_id):
         {"product": product, "categories": categories},
     )
 
-
+# Добавление блюда в стоп-лист
 @group_required(["Manager"])
 def add_to_stop_list(request):
     if request.method == "POST":
@@ -373,6 +378,7 @@ def add_to_stop_list(request):
         )
     return JsonResponse({"error": "Недопустимый метод запроса."}, status=405)
 
+# Добавление нового блюда
 @group_required(["Manager"])
 def add_product(request):
     if request.method == "POST":

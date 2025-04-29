@@ -150,14 +150,10 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 # Модель пользователя
 AUTH_USER_MODEL = 'users.User'
-
 LOGIN_URL = '/user/login/'
-
 SESSION_COOKIE_AGE = 82800
-
 # Настройка отправки почты
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.yandex.ru'  # Замените на ваш SMTP сервер

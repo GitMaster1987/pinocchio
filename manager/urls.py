@@ -11,6 +11,7 @@ from manager.views import (
     AddOrderItemView,
     ConfirmOrderView,
     ConfirmsOrderListView,
+    ReturnProcessingView,
 )
 
 app_name = "manager"
@@ -33,11 +34,7 @@ urlpatterns = [
     # '''Confirms-Order'''
     path("confirms_order/", ConfirmsOrderListView.as_view(), name="confirms_order"),
     # '''Возвращаем в обработку'''
-    path(
-        "return_processing/<int:order_id>/",
-        views.return_processing,
-        name="return_processing",
-    ),
+   path("return_processing/<int:order_id>/", ReturnProcessingView.as_view(), name="return_processing"),
     # '''Список наших блюд'''
     path("view_products/", views.view_products, name="view_products"),
     # '''Редактирование блюда''

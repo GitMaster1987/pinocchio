@@ -18,7 +18,6 @@ from carts.models import Cart
 from users.models import User
 from users.forms import PasswordResetRequestForm, UserLoginForm, UserRegistrationForm
 
-
 class LoginView(FormView):
     template_name = "users/login.html"
     form_class = UserLoginForm
@@ -67,6 +66,7 @@ class LogoutView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         auth_logout(request)
         return redirect(reverse("main:index"))
+
 
 
 class PasswordResetRequestView(FormView):
